@@ -13,6 +13,7 @@ export default function Menu(props) {
     axios
       .get("/api/users")
       .then(res => {
+
         props.setUser(res.data[0]);
 
         setCurrentUser(res.data[0].name);
@@ -61,7 +62,7 @@ export default function Menu(props) {
         <Button
           className={`logged-in ${
             isLoggedIn ? "is-loggedin" : "is-not-loggedin"
-          }`}
+            }`}
           variant="outline-success"
           onClick={getUser}
         >
