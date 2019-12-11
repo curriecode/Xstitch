@@ -22,8 +22,8 @@ Xstitch is a version control application for creating and editing cross stitch p
 
 ## Final Product
 
- ![ ](#)
- ![ ](#)
+ ![Gif of homepage](https://github.com/curriecode/Xstitch/blob/master/docs/scroll.gif)
+ ![Gif of editing pattern](https://github.com/curriecode/Xstitch/blob/master/docs/edit.gif)
  ![ ](#)
  ![ ](#)
  ![ ](#)
