@@ -63,7 +63,11 @@ export default function View(props) {
             Edit
             <Icon name="edit" />
           </Button>
-          <Button icon color="green" labelPosition="left" floated="right">
+          <Button
+            icon color="green"
+            labelPosition="left"
+            floated="right"
+            onClick={props.forkPattern}>
             Fork
             <Icon name="fork" />
           </Button>

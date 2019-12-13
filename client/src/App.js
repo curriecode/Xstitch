@@ -134,6 +134,26 @@ export default function App() {
       }
     });
   }
+  console.log("pattern data", pattern)
+  console.log("checkpoint data", checkpoint)
+  function forkPattern() {
+    let currentUser = user.id;
+    if (!currentUser) {
+      return alert("You must log in");
+    }
+    let reqData = {
+      forked_from_id: pattern.id,
+      user_id: currentUser,
+      description: pattern.description,
+      title: pattern.title,
+      colours: checkpoint.colours,
+      image_url: checkpoint.image_url
+    };
+    axios.post("api/patterns", reqData)
+      .then((res) => {
+        console.log(res.data)
+      })
+  }
   //renders either homepage, view page or grid based on click
   if (page === "home") {
     showPage = (
@@ -164,6 +184,7 @@ export default function App() {
       getCheckpointHistory={getCheckpointHistory}
       getPattern={getPattern}
       historyView={historyView}
+      forkPattern={forkPattern}
     />
 
   } else if (page === "edit") {

@@ -17,11 +17,12 @@ class Api::PatternsController < ApplicationController
   end
 
   def create
-    # puts "inside create pattern"
+    puts "inside create pattern"
     @pattern = Pattern.create(
       user_id: params[:user_id],
       title: params[:title],
-      description: params[:description]
+      description: params[:description],
+      forked_from_id: params[:forked_from_id]
     )
     # byebug    
     if @pattern.save
