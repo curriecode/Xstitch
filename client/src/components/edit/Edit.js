@@ -52,7 +52,7 @@ export default function Edit(props) {
     setColor(input.hex);
   }
 
-  function addRow() {
+  function addRowBelow() {
     const newRow = [];
     for (let i = 0; i < pattern[0].length; i++) {
       newRow.push("#ffffff");
@@ -60,7 +60,7 @@ export default function Edit(props) {
     updatePattern(prev => [...prev, newRow]);
   }
 
-  function deleteRow() {
+  function deleteRowBelow() {
     updatePattern(pattern.slice(0, pattern.length - 1));
   }
 
@@ -191,7 +191,7 @@ export default function Edit(props) {
         </div>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
-          <RowButtons addRow={addRow} deleteRow={deleteRow} />
+          <RowButtons addRowBelow={addRowBelow} deleteRowBelow={deleteRowBelow} />
           <ColumnButtons addColumn={addColumn} deleteColumn={deleteColumn} />
         </div>
         <PixelSizeButtons setSize={setSize} />
