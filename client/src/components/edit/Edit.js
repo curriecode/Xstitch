@@ -52,7 +52,7 @@ export default function Edit(props) {
     setColor(input.hex);
   }
 
-  function addRowBelow() {
+  function addRowBottom() {
     const newRow = [];
     for (let i = 0; i < pattern[0].length; i++) {
       newRow.push("#ffffff");
@@ -60,11 +60,11 @@ export default function Edit(props) {
     updatePattern(prev => [...prev, newRow]);
   }
 
-  function deleteRowBelow() {
+  function deleteRowBottom() {
     updatePattern(pattern.slice(0, pattern.length - 1));
   }
 
-  function addColumn() {
+  function addColumnRight() {
     updatePattern(prev => {
       let newPattern = [];
       prev.forEach(row => {
@@ -75,7 +75,7 @@ export default function Edit(props) {
     });
   }
 
-  function deleteColumn() {
+  function deleteColumnRight() {
     updatePattern(prev => {
       let newPattern = [];
       prev.forEach(row => {
@@ -191,8 +191,8 @@ export default function Edit(props) {
         </div>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
-          <RowButtons addRowBelow={addRowBelow} deleteRowBelow={deleteRowBelow} />
-          <ColumnButtons addColumn={addColumn} deleteColumn={deleteColumn} />
+          <RowButtons addRowBottom={addRowBottom} deleteRowBottom={deleteRowBottom} />
+          <ColumnButtons addColumnRight={addColumnRight} deleteColumnRight={deleteColumnRight} />
         </div>
         <PixelSizeButtons setSize={setSize} />
         <Button content="Version history" onClick={toggleHistory} />

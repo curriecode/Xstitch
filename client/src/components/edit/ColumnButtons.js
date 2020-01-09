@@ -4,12 +4,12 @@ import { Button, Icon } from "semantic-ui-react";
 export default function ColumnButtons(props) {
   return (
     <Button.Group vertical>
-      <Button icon labelPosition="left" onClick={props.addColumn}>
+      <Button icon labelPosition="left" onClick={props.addColumnRight}>
         <Icon name="plus" />
-        Add Column
+        Add Column Right
       </Button>
-      <Button icon labelPosition="left" onClick={props.deleteColumn}>
-        Delete Column
+      <Button icon labelPosition="left" onClick={props.deleteColumnRight}>
+        Delete Column Right
         <Icon name="minus" />
       </Button>
     </Button.Group>
