@@ -7,7 +7,7 @@ import Patterns from "./components/patterns";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Edit from "./components/edit/Edit";
 import View from "./components/view/View";
-// testing that char char's branch is working
+// try again
 export default function App() {
   let content;
   let showPage;
