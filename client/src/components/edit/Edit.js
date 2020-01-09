@@ -14,7 +14,9 @@ import PixelSizeButtons from "./PixelSizeButtons";
 export default function Edit(props) {
   const blankPattern = [];
   const [color, setColor] = useState("#9B9B9B");
-  const [pattern, updatePattern] = useState(props.setClickedView.colours || blankPattern);
+  const [pattern, updatePattern] = useState(
+    props.setClickedView.colours || blankPattern
+  );
   const [pixelSize, setPixelSize] = useState("medium");
 
   for (let i = 0; i < 25; i++) {
@@ -60,6 +62,18 @@ export default function Edit(props) {
     updatePattern(prev => [...prev, newRow]);
   }
 
+  function addRowTop() {
+    const newRow = [];
+    for (let i = 0; i < pattern[0].length; i++) {
+      newRow.push("#ffffff");
+    }
+    updatePattern(prev => [newRow, ...prev]);
+  }
+
+  function deleteRowTop() {
+    updatePattern(pattern.slice(1, pattern.length));
+  }
+
   function deleteRowBottom() {
     updatePattern(pattern.slice(0, pattern.length - 1));
   }
@@ -97,12 +111,14 @@ export default function Edit(props) {
   if (history === "hide") {
     historyTab = <div></div>;
   } else {
-    historyTab = <History
-      setPage={props.setPage}
-      setCheckpoint={props.setCheckpoint}
-      setHistoryView={props.setHistoryView}
-      history={props.checkpointHistory}
-    />;
+    historyTab = (
+      <History
+        setPage={props.setPage}
+        setCheckpoint={props.setCheckpoint}
+        setHistoryView={props.setHistoryView}
+        history={props.checkpointHistory}
+      />
+    );
   }
 
   function createImage() {
@@ -191,8 +207,16 @@ export default function Edit(props) {
         </div>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
-          <RowButtons addRowBottom={addRowBottom} deleteRowBottom={deleteRowBottom} />
-          <ColumnButtons addColumnRight={addColumnRight} deleteColumnRight={deleteColumnRight} />
+          <RowButtons
+            addRowTop={addRowTop}
+            deleteRowTop={deleteRowTop}
+            addRowBottom={addRowBottom}
+            deleteRowBottom={deleteRowBottom}
+          />
+          <ColumnButtons
+            addColumnRight={addColumnRight}
+            deleteColumnRight={deleteColumnRight}
+          />
         </div>
         <PixelSizeButtons setSize={setSize} />
         <Button content="Version history" onClick={toggleHistory} />
