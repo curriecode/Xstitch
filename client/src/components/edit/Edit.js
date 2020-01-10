@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import ColorPicker from "./ColorPicker";
 import Grid from "./Grid";
-import RowButtons from "./RowButtons";
-import ColumnButtons from "./ColumnButtons";
 import History from "./History";
 import "./Edit.css";
 import { Button } from "semantic-ui-react";
@@ -10,7 +8,7 @@ import html2canvas from "html2canvas";
 import PixelSizeButtons from "./PixelSizeButtons";
 import RowColumnButtons from "./RowColumnButtons";
 
-//default array for rendering grid
+
 
 export default function Edit(props) {
   const blankPattern = [];
@@ -20,6 +18,7 @@ export default function Edit(props) {
   );
   const [pixelSize, setPixelSize] = useState("medium");
 
+  //default array for rendering grid
   for (let i = 0; i < 25; i++) {
     blankPattern.push([]);
     for (let j = 0; j < 25; j++) {
