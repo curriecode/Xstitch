@@ -106,6 +106,8 @@ export default function App() {
   let [clickedView, setClickedView] = useState({});
   //this function is fired from patternlist item , sets the state for clickedView which is
   //passed to the View component
+  // renderSavedPattern will take you to the "view" page when any of the "view" buttons are clicked
+  //also sets current pattern and checkpoint in state whichis what makes forking possible 
   function renderSavedPattern(patternId) {
     axios
       .get("api/checkpoints")
@@ -116,6 +118,15 @@ export default function App() {
         let currentViewOnPage = currentView[currentView.length - 1];
         setClickedView(currentViewOnPage);
         setCheckpoint(currentViewOnPage);
+      }).then(() => {
+        axios.get("api/patterns", patternId)
+          .then((res) => {
+            let currentViewPattern = res.data.filter(item => {
+              return item.id === patternId;
+            });
+            let patternOnPage = currentViewPattern[currentViewPattern.length - 1]
+            setPattern(patternOnPage)
+          })
       })
       .catch(err => {
         console.log("current view for checkpoint failed because", err);
@@ -133,6 +144,26 @@ export default function App() {
         setPattern(item);
       }
     });
+  }
+  console.log("pattern data", pattern)
+  console.log("checkpoint data", checkpoint)
+  function forkPattern() {
+    let currentUser = user.id;
+    if (!currentUser) {
+      return alert("You must log in");
+    }
+    let reqData = {
+      forked_from_id: pattern.id,
+      user_id: currentUser,
+      description: pattern.description,
+      title: pattern.title,
+      colours: checkpoint.colours,
+      image_url: checkpoint.image_url
+    };
+    axios.post("api/patterns", reqData)
+      .then((res) => {
+        console.log("res from fork pattern function", res.data)
+      })
   }
   //renders either homepage, view page or grid based on click
   if (page === "home") {
@@ -164,6 +195,7 @@ export default function App() {
       getCheckpointHistory={getCheckpointHistory}
       getPattern={getPattern}
       historyView={historyView}
+      forkPattern={forkPattern}
     />
 
   } else if (page === "edit") {

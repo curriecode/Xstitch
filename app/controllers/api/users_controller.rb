@@ -1,9 +1,6 @@
 class Api::UsersController < ApplicationController
 
   def index
-    # puts 'hi'
-    # puts User.all
-    # puts 'bye'
     render json: User.all
   end
 
@@ -11,7 +8,6 @@ class Api::UsersController < ApplicationController
     p params
     id = params[:id]
     user = User.find(id)
-    # favs = Favourite.find_by(user_id: user.id)
     favs = user.favourites
 
     render json: { user: user, favorites: favs }, status: 200 and return

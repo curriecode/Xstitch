@@ -5,35 +5,6 @@ class Api::CheckpointsController < ApplicationController
    render json: @checkpoint, status: 200 and return
 
   end
-  # def index
-    #     if @checkpoint.nil?
-    #   p "failing"
-    #   render json: {error: {message: "No Pattern Found"}}, status: 500 and return
-    # else
-    #   p "inside success"
-    #   @checkpoint = Checkpoint.where(patterns_id:params[:patterns_id])
-    #   render json: @checkpoint, status: 200 and return
-    # end
-    # render json: Checkpoint.all
-  # end
-
-  # def show
-    # puts "this is params"
-    # puts params
-    # @checkpoint = Checkpoint.where(params[:patterns_id])
-
-    # @pattern = Pattern.find(params[:patterns_id])
-    # if @checkpoint.nil?
-    #   p "failing"
-    #   render json: {error: {message: "No Pattern Found"}}, status: 500 and return
-    # else
-    #   p "inside success"
-    #   @checkpoint = Checkpoint.joins(:pattern).where(
-    #   patterns_id:params[:patterns_id]
-    #   )
-      # render json: @checkpoint, status: 200 and return
-    # end
-  # end
 
   def create
     @pattern = Pattern.find(params[:pattern_id])
