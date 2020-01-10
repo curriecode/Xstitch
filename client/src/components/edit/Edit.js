@@ -230,14 +230,11 @@ export default function Edit(props) {
         </div>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
-          <RowColumnButtons />
-          <RowButtons
+          <RowColumnButtons
             addRowTop={addRowTop}
             deleteRowTop={deleteRowTop}
             addRowBottom={addRowBottom}
             deleteRowBottom={deleteRowBottom}
-          />
-          <ColumnButtons
             addColumnLeft={addColumnLeft}
             deleteColumnLeft={deleteColumnLeft}
             addColumnRight={addColumnRight}
