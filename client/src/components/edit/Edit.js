@@ -89,6 +89,17 @@ export default function Edit(props) {
     });
   }
 
+  function addColumnLeft() {
+    updatePattern(prev => {
+      let newPattern = [];
+      prev.forEach(row => {
+        row.unshift("#ffffff");
+        newPattern.push(row);
+      });
+      return newPattern;
+    });
+  }
+
   function deleteColumnRight() {
     updatePattern(prev => {
       let newPattern = [];
@@ -99,6 +110,18 @@ export default function Edit(props) {
       return newPattern;
     });
   }
+
+  function deleteColumnLeft() {
+    updatePattern(prev => {
+      let newPattern = [];
+      prev.forEach(row => {
+        row.shift()
+        newPattern.push(row);
+      });
+      return newPattern;
+    });
+  }
+
 
   function toggleHistory() {
     if (history === "hide") {
@@ -214,6 +237,8 @@ export default function Edit(props) {
             deleteRowBottom={deleteRowBottom}
           />
           <ColumnButtons
+            addColumnLeft={addColumnLeft}
+            deleteColumnLeft={deleteColumnLeft}
             addColumnRight={addColumnRight}
             deleteColumnRight={deleteColumnRight}
           />
