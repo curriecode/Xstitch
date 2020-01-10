@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import ColorPicker from "./ColorPicker";
 import Grid from "./Grid";
-import RowButtons from "./RowButtons";
-import ColumnButtons from "./ColumnButtons";
 import History from "./History";
 import "./Edit.css";
 import { Button } from "semantic-ui-react";
 import html2canvas from "html2canvas";
 import PixelSizeButtons from "./PixelSizeButtons";
+import RowColumnButtons from "./RowColumnButtons";
 
-//default array for rendering grid
+
 
 export default function Edit(props) {
   const blankPattern = [];
   const [color, setColor] = useState("#9B9B9B");
-  const [pattern, updatePattern] = useState(props.setClickedView.colours || blankPattern);
+  const [pattern, updatePattern] = useState(
+    props.setClickedView.colours || blankPattern
+  );
   const [pixelSize, setPixelSize] = useState("medium");
 
+  //default array for rendering grid
   for (let i = 0; i < 25; i++) {
     blankPattern.push([]);
     for (let j = 0; j < 25; j++) {
@@ -52,7 +54,7 @@ export default function Edit(props) {
     setColor(input.hex);
   }
 
-  function addRow() {
+  function addRowBottom() {
     const newRow = [];
     for (let i = 0; i < pattern[0].length; i++) {
       newRow.push("#ffffff");
@@ -60,11 +62,23 @@ export default function Edit(props) {
     updatePattern(prev => [...prev, newRow]);
   }
 
-  function deleteRow() {
+  function addRowTop() {
+    const newRow = [];
+    for (let i = 0; i < pattern[0].length; i++) {
+      newRow.push("#ffffff");
+    }
+    updatePattern(prev => [newRow, ...prev]);
+  }
+
+  function deleteRowTop() {
+    updatePattern(pattern.slice(1, pattern.length));
+  }
+
+  function deleteRowBottom() {
     updatePattern(pattern.slice(0, pattern.length - 1));
   }
 
-  function addColumn() {
+  function addColumnRight() {
     updatePattern(prev => {
       let newPattern = [];
       prev.forEach(row => {
@@ -75,11 +89,33 @@ export default function Edit(props) {
     });
   }
 
-  function deleteColumn() {
+  function addColumnLeft() {
+    updatePattern(prev => {
+      let newPattern = [];
+      prev.forEach(row => {
+        row.unshift("#ffffff");
+        newPattern.push(row);
+      });
+      return newPattern;
+    });
+  }
+
+  function deleteColumnRight() {
     updatePattern(prev => {
       let newPattern = [];
       prev.forEach(row => {
         row.pop();
+        newPattern.push(row);
+      });
+      return newPattern;
+    });
+  }
+
+  function deleteColumnLeft() {
+    updatePattern(prev => {
+      let newPattern = [];
+      prev.forEach(row => {
+        row.shift();
         newPattern.push(row);
       });
       return newPattern;
@@ -97,12 +133,14 @@ export default function Edit(props) {
   if (history === "hide") {
     historyTab = <div></div>;
   } else {
-    historyTab = <History
-      setPage={props.setPage}
-      setCheckpoint={props.setCheckpoint}
-      setHistoryView={props.setHistoryView}
-      history={props.checkpointHistory}
-    />;
+    historyTab = (
+      <History
+        setPage={props.setPage}
+        setCheckpoint={props.setCheckpoint}
+        setHistoryView={props.setHistoryView}
+        history={props.checkpointHistory}
+      />
+    );
   }
 
   function createImage() {
@@ -182,8 +220,16 @@ export default function Edit(props) {
         </div>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
-          <RowButtons addRow={addRow} deleteRow={deleteRow} />
-          <ColumnButtons addColumn={addColumn} deleteColumn={deleteColumn} />
+          <RowColumnButtons
+            addRowTop={addRowTop}
+            deleteRowTop={deleteRowTop}
+            addRowBottom={addRowBottom}
+            deleteRowBottom={deleteRowBottom}
+            addColumnLeft={addColumnLeft}
+            deleteColumnLeft={deleteColumnLeft}
+            addColumnRight={addColumnRight}
+            deleteColumnRight={deleteColumnRight}
+          />
         </div>
         <PixelSizeButtons setSize={setSize} />
         <Button content="Version history" onClick={toggleHistory} />
