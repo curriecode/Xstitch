@@ -116,6 +116,15 @@ export default function App() {
         let currentViewOnPage = currentView[currentView.length - 1];
         setClickedView(currentViewOnPage);
         setCheckpoint(currentViewOnPage);
+      }).then(() => {
+        axios.get("api/patterns", patternId)
+          .then((res) => {
+            let currentViewPattern = res.data.filter(item => {
+              return item.id === patternId;
+            });
+            let patternOnPage = currentViewPattern[currentViewPattern.length - 1]
+            setPattern(patternOnPage)
+          })
       })
       .catch(err => {
         console.log("current view for checkpoint failed because", err);
@@ -151,7 +160,7 @@ export default function App() {
     };
     axios.post("api/patterns", reqData)
       .then((res) => {
-        console.log(res.data)
+        console.log("res from fork pattern function", res.data)
       })
   }
   //renders either homepage, view page or grid based on click
