@@ -106,6 +106,8 @@ export default function App() {
   let [clickedView, setClickedView] = useState({});
   //this function is fired from patternlist item , sets the state for clickedView which is
   //passed to the View component
+  // renderSavedPattern will take you to the "view" page when any of the "view" buttons are clicked
+  //also sets current pattern and checkpoint in state whichis what makes forking possible 
   function renderSavedPattern(patternId) {
     axios
       .get("api/checkpoints")
