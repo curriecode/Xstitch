@@ -8,6 +8,7 @@ import "./Edit.css";
 import { Button } from "semantic-ui-react";
 import html2canvas from "html2canvas";
 import PixelSizeButtons from "./PixelSizeButtons";
+import RowColumnButtons from "./RowColumnButtons";
 
 //default array for rendering grid
 
@@ -115,13 +116,12 @@ export default function Edit(props) {
     updatePattern(prev => {
       let newPattern = [];
       prev.forEach(row => {
-        row.shift()
+        row.shift();
         newPattern.push(row);
       });
       return newPattern;
     });
   }
-
 
   function toggleHistory() {
     if (history === "hide") {
@@ -230,6 +230,7 @@ export default function Edit(props) {
         </div>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
+          <RowColumnButtons />
           <RowButtons
             addRowTop={addRowTop}
             deleteRowTop={deleteRowTop}
