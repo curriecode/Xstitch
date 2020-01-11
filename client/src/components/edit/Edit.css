@@ -90,7 +90,7 @@
   justify-content: space-around;
   padding: 10px;
   background-color: darkgrey;
-  width: 20%;
+  width: 300px;
 }
 
 #capture {
@@ -100,7 +100,8 @@
 
 .size-controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+
 }
 
 .row {
@@ -113,6 +114,7 @@
   background-color: white;
   display: flex;
   flex-direction: row;
+  font-size: 0.9em;
 }
 
 .row-buttons {
@@ -126,24 +128,43 @@
   width: 100%;
   height: 20px;
   background-color: grey;
+  border: none;
 }
+
 .row-button-delete {
   width: 100%;
   height: 20px;
   background-color: lightgrey;
+  border: none;
 }
 
 .column-button-add {
   height: 100%;
-  width: 20px;
+  width: 30px;
   background-color: grey;
+  display: flex;
+  padding: 0;
+  border: none;
+}
+
+.column-button-add > span {
+  width: 100%;
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
+
 .column-button-delete {
-  /* height: 100%; */
-  width: 20px;
+  height: 100%;
+  width: 30px;
   background-color: lightgrey;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+}
+
+.column-button-delete > span {
+  width: 100%;
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
@@ -160,6 +181,7 @@
   height: 100%;
   width: 100%;
 }
+
 .button-container-inner {
   display: flex;
   flex-direction: column;
