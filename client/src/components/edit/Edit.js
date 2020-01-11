@@ -230,8 +230,8 @@ export default function Edit(props) {
             addColumnRight={addColumnRight}
             deleteColumnRight={deleteColumnRight}
           />
-        </div>
         <PixelSizeButtons setSize={setSize} />
+        </div>
         <Button content="Version history" onClick={toggleHistory} />
         <Button
           onClick={() => {
