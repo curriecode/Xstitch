@@ -3,20 +3,45 @@ import React from "react";
 export default function RowColumnButtons(props) {
   return (
     <div className="row-column-buttons">
-      <div className="column-button-add" onClick={props.addColumnLeft}>+ Column</div>
+      <button className="column-button-add" onClick={props.addColumnLeft}>
+        <span>+ Column</span>
+      </button>
       <div className="row-buttons">
-        <div className="row-button-add" onClick={props.addRowTop} >+ Row</div>
+        <button className="row-button-add" onClick={props.addRowTop}>
+          <span>+ Row</span>
+        </button>
         <div className="button-container">
-          <div className="column-button-delete" onClick={props.deleteColumnLeft}>- Column</div>
+          <button
+            className="column-button-delete"
+            onClick={props.deleteColumnLeft}
+          >
+            <span>- Column</span>
+          </button>
           <div className="button-container-inner">
-            <div className="row-button-delete" onClick={props.deleteRowTop}>- Row</div>
-            <div className="row-button-delete" onClick={props.deleteRowBottom}>- Row</div>
+            <button className="row-button-delete" onClick={props.deleteRowTop}>
+              <span>- Row</span>
+            </button>
+            <button
+              className="row-button-delete"
+              onClick={props.deleteRowBottom}
+            >
+              <span>- Row</span>
+            </button>
           </div>
-          <div className="column-button-delete" onClick={props.deleteColumnRight}>- Column</div>
+          <button
+            className="column-button-delete"
+            onClick={props.deleteColumnRight}
+          >
+            <span>- Column</span>
+          </button>
         </div>
-        <div className="row-button-add" onClick={props.addRowBottom}>+ Row</div>
+        <button className="row-button-add" onClick={props.addRowBottom}>
+          <span>+ Row</span>
+        </button>
       </div>
-      <div className="column-button-add" onClick={props.addColumnRight}>+ Column</div>
+      <button className="column-button-add" onClick={props.addColumnRight}>
+        <span>+ Column</span>
+      </button>
     </div>
   );
 }
