@@ -8,8 +8,6 @@ import html2canvas from "html2canvas";
 import PixelSizeButtons from "./PixelSizeButtons";
 import RowColumnButtons from "./RowColumnButtons";
 
-
-
 export default function Edit(props) {
   const blankPattern = [];
   const [color, setColor] = useState("#9B9B9B");
@@ -179,7 +177,6 @@ export default function Edit(props) {
     // console.log("description here", event.target.value);
   }
 
-
   return (
     <section className="edit">
       <div className="grid-history">
@@ -221,6 +218,8 @@ export default function Edit(props) {
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
           <RowColumnButtons
+            patternRows={pattern.length}
+            patternColumns={pattern[0].length}
             addRowTop={addRowTop}
             deleteRowTop={deleteRowTop}
             addRowBottom={addRowBottom}
@@ -230,7 +229,7 @@ export default function Edit(props) {
             addColumnRight={addColumnRight}
             deleteColumnRight={deleteColumnRight}
           />
-        <PixelSizeButtons setSize={setSize} />
+          <PixelSizeButtons setSize={setSize} />
         </div>
         <Button content="Version history" onClick={toggleHistory} />
         <Button
