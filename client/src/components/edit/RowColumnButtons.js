@@ -1,4 +1,5 @@
 import React from "react";
+import { FaArrowsAltH, FaArrowsAltV } from "react-icons/fa";
 
 export default function RowColumnButtons(props) {
   return (
@@ -21,6 +22,14 @@ export default function RowColumnButtons(props) {
             <button className="row-button-delete" onClick={props.deleteRowTop}>
               <span>- Row</span>
             </button>
+            <div className="grid-size-container">
+              <FaArrowsAltH />
+              {props.patternColumns}
+            </div>
+            <div className="grid-size-container">
+              <FaArrowsAltV />
+              {props.patternRows}
+            </div>
             <button
               className="row-button-delete"
               onClick={props.deleteRowBottom}
