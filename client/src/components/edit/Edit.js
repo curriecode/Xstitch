@@ -8,6 +8,11 @@ import html2canvas from "html2canvas";
 import PixelSizeButtons from "./PixelSizeButtons";
 import RowColumnButtons from "./RowColumnButtons";
 
+//imports for image overlay/drag and drop
+import ImageOverlay from "./image-overlay/ImageOverlay";
+import { DndProvider } from "react-dnd";
+import Backend from "react-dnd-html5-backend";
+
 export default function Edit(props) {
   const blankPattern = [];
   const [color, setColor] = useState("#9B9B9B");
@@ -20,7 +25,7 @@ export default function Edit(props) {
   for (let i = 0; i < 25; i++) {
     blankPattern.push([]);
     for (let j = 0; j < 25; j++) {
-      blankPattern[i].push("#fff");
+      blankPattern[i].push("#ffffff00");
     }
   }
   const [description, setDescription] = useState("");
@@ -180,7 +185,9 @@ export default function Edit(props) {
   return (
     <section className="edit">
       <div className="grid-history">
-        {/* {renderGrid} */}
+        <DndProvider backend={Backend}>
+          <ImageOverlay />
+        </DndProvider>
         <Grid pattern={pattern} updateColor={updateColor} size={pixelSize} />
         {historyTab}
       </div>
