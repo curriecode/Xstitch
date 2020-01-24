@@ -36,6 +36,8 @@ export default function Edit(props) {
   const [history, viewHistory] = useState("hide");
   let historyTab;
 
+  const [imageURL, setImageURL] = useState("");
+
   function updateColor(input) {
     const newPattern = pattern.map((row, rowIndex) => {
       if (rowIndex === input[0]) {
@@ -186,7 +188,7 @@ export default function Edit(props) {
     <section className="edit">
       <div className="grid-history">
         <DndProvider backend={Backend}>
-          <ImageOverlay />
+          <ImageOverlay imageURL={imageURL} />
         </DndProvider>
         <Grid pattern={pattern} updateColor={updateColor} size={pixelSize} />
         {historyTab}
@@ -220,6 +222,19 @@ export default function Edit(props) {
             aria-label="Description"
             aria-describedby="basic-addon1"
             onChange={handleDescriptionChange}
+          ></input>
+        </div>
+        <div className="input-group">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Image URL</span>
+          </div>
+          <input
+            type="text"
+            className="form-control"
+            aria-label="URL"
+            onChange={event => {
+              setImageURL(event.target.value);
+            }}
           ></input>
         </div>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />

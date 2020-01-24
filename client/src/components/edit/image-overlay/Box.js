@@ -1,14 +1,14 @@
 import React from 'react'
 import { useDrag } from 'react-dnd'
 import ItemTypes from './ItemTypes'
-import babyYoda from "./baby-yoda.JPG"
+
 const style = {
   position: 'absolute',
   cursor: 'move',
 }
-const Box = ({ id, left, top, children }) => {
+const Box = ({ left, top, imageURL }) => {
   const [{ isDragging }, drag] = useDrag({
-    item: { id, left, top, type: ItemTypes.BOX },
+    item: { left, top, type: ItemTypes.BOX },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -18,8 +18,7 @@ const Box = ({ id, left, top, children }) => {
   }
   return (
     <div ref={drag} style={{ ...style, left, top }}>
-      {children}
-      <img src={babyYoda} />
+      <img src={imageURL} />
     </div>
   )
 }

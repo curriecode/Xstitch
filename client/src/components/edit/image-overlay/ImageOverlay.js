@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import Container from './Container'
-export default function ImageOverlay() {
+export default function ImageOverlay(props) {
   const [moveImage, setMoveImage] = useState(true);
   const [zIndex, setzIndex] = useState(1000)
   const toggle = useCallback(() => setMoveImage(!moveImage), [
@@ -17,7 +17,7 @@ export default function ImageOverlay() {
 
   return (
     <div>
-      <Container zIndex={zIndex}/>
+      <Container zIndex={zIndex} imageURL={props.imageURL}/>
       <label htmlFor="moveImage" style={{ zIndex: 1001, position: 'fixed'}}>
           <input
             id="moveImage"
