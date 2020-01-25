@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ColorPicker from "./ColorPicker";
 import Grid from "./Grid";
 import History from "./History";
@@ -16,7 +16,24 @@ export default function Edit(props) {
   const [pattern, updatePattern] = useState(
     props.setClickedView.colours || blankPattern
   );
+  console.log("pataern data from edit", pattern)
   const [pixelSize, setPixelSize] = useState("medium");
+
+  // const clearGrid = () => {
+  //   if (props.currentPattern === null) {
+  //     console.log("inside clearGrid")
+  //     updatePattern(blankPattern)
+  //   }
+  // }
+
+  useEffect(() => {
+    console.log("insdie useEffect")
+    console.log("this pattern in useEffect", props.thisPattern)
+    if (props.thisPattern === undefined) {
+      updatePattern(blankPattern)
+    }
+    console.log("after update")
+  }, [])
 
   //default array for rendering grid
   for (let i = 0; i < 25; i++) {

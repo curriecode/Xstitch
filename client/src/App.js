@@ -206,6 +206,7 @@ export default function App() {
       setClickedView={clickedView}
       setPage={setPage}
       setHistoryView={setHistoryView}
+      thisPattern={pattern}
     />
   }
   else {
