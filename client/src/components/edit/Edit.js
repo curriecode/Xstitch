@@ -19,18 +19,13 @@ export default function Edit(props) {
   console.log("pataern data from edit", pattern)
   const [pixelSize, setPixelSize] = useState("medium");
 
-  // const clearGrid = () => {
-  //   if (props.currentPattern === null) {
-  //     console.log("inside clearGrid")
-  //     updatePattern(blankPattern)
-  //   }
-  // }
 
   useEffect(() => {
     console.log("insdie useEffect")
     console.log("this pattern in useEffect", props.thisPattern)
     if (props.thisPattern === undefined) {
       updatePattern(blankPattern)
+      props.setHistory([])
     }
     console.log("after update")
   }, [])

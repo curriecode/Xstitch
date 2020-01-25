@@ -183,6 +183,8 @@ export default function App() {
         checkpointHistory={history}
         setClickedView={clickedView}
         setPage={page}
+        setHistory={setHistory}
+
       />
     );
   } else if (page === "view") {
@@ -207,6 +209,7 @@ export default function App() {
       setPage={setPage}
       setHistoryView={setHistoryView}
       thisPattern={pattern}
+    // setHistory={setHistory}
     />
   }
   else {
