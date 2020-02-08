@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from "react";
-import ColorPicker from "./ColorPicker";
+import React, { useState, useEffect, useCallback } from "react";
 import Grid from "./Grid";
 import History from "./History";
 import "./Edit.css";
 import { Button } from "semantic-ui-react";
 import html2canvas from "html2canvas";
-import PixelSizeButtons from "./PixelSizeButtons";
-import RowColumnButtons from "./RowColumnButtons";
+
+//control panel components
+import ColorPicker from "./control-panel/ColorPicker";
+import PixelSizeButtons from "./control-panel/PixelSizeButtons";
+import RowColumnButtons from "./control-panel/RowColumnButtons";
+import TextInputs from "./control-panel/TextInputs";
+import MoveImageToggle from "./control-panel/MoveImageToggle";
+
+//imports for image overlay/drag and drop
+import ImageOverlay from "./image-overlay/ImageOverlay";
+import { DndProvider } from "react-dnd";
+import Backend from "react-dnd-html5-backend";
 
 export default function Edit(props) {
   const blankPattern = [];
@@ -15,30 +24,46 @@ export default function Edit(props) {
     props.setClickedView.colours || blankPattern
   );
   // console.log("pataern data from edit", pattern)
+
   const [pixelSize, setPixelSize] = useState("medium");
 
-
   useEffect(() => {
+
     if (props.thisPattern === undefined) {
-      updatePattern(blankPattern)
-      props.setHistory([])
+      updatePattern(blankPattern);
+      props.setHistory([]);
     }
   }, [])
+
 
   //default array for rendering grid
   for (let i = 0; i < 25; i++) {
     blankPattern.push([]);
     for (let j = 0; j < 25; j++) {
-      blankPattern[i].push("#fff");
+      blankPattern[i].push("#ffffff00");
     }
   }
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  // const [image, setImage] = useState(null)
+  const [imageURL, setImageURL] = useState("");
 
   // used to show/hide the history tab
   const [history, viewHistory] = useState("hide");
   let historyTab;
+
+  // image overlay
+  const [moveImage, setMoveImage] = useState(false);
+  const [zIndex, setzIndex] = useState(1000);
+  const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
+
+  // useEffect for image overlay
+  useEffect(() => {
+    if (moveImage) {
+      setzIndex(1000);
+    } else {
+      setzIndex(0);
+    }
+  }, [moveImage]);
 
   function updateColor(input) {
     const newPattern = pattern.map((row, rowIndex) => {
@@ -178,52 +203,28 @@ export default function Edit(props) {
 
   function handleTitleChange(event) {
     setTitle(event.target.value);
-    // console.log("title here", event.target.value);
   }
 
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
-    // console.log("description here", event.target.value);
   }
 
   return (
     <section className="edit">
-      <div className="grid-history">
-        {/* {renderGrid} */}
+      <div className="grid-history" style={{ zIndex: "100"}}>
+        <DndProvider backend={Backend}>
+          <ImageOverlay imageURL={imageURL} zIndex={zIndex} />
+        </DndProvider>
         <Grid pattern={pattern} updateColor={updateColor} size={pixelSize} />
         {historyTab}
       </div>
       <div className="controls" style={{ backgroundColor: color }}>
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon1">
-              Title
-            </span>
-          </div>
-          <input
-            // o={title}
-            type="text"
-            className="form-control"
-            aria-label="Title"
-            aria-describedby="basic-addon1"
-            onChange={handleTitleChange}
-          ></input>
-        </div>
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon1">
-              Description
-            </span>
-          </div>
-          <input
-            // value={form.description}
-            type="text"
-            className="form-control"
-            aria-label="Description"
-            aria-describedby="basic-addon1"
-            onChange={handleDescriptionChange}
-          ></input>
-        </div>
+        <TextInputs
+          handleTitleChange={handleTitleChange}
+          handleDescriptionChange={handleDescriptionChange}
+          setImageURL={setImageURL}
+        />
+        <MoveImageToggle moveImage={moveImage} toggle={toggle}/>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
           <RowColumnButtons
@@ -249,7 +250,6 @@ export default function Edit(props) {
           Save
         </Button>
       </div>
-      {/* </div> */}
     </section>
   );
 }

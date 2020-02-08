@@ -8,8 +8,7 @@ export default function Pixel(props) {
   }
   return (
     <div
-      className="pixel"
-      className={props.size}
+      className={`pixel ${props.size}`}
       onClick={props.onClick}
       style={{ backgroundColor: props.color }}
       onMouseOver={mouseHandler}
