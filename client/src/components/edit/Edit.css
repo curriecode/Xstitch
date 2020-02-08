@@ -68,7 +68,7 @@
 .pixel {
   border-top: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
-  z-index: 2000
+  z-index: 100
 }
 
 .small {
@@ -103,14 +103,11 @@
   box-shadow: 2px 2px 5px #888;
   /* the container is always slighthly too narrow I can't figure out why so I've added padding */
   padding: 0px 15px;
-  z-index: 5;
-  opacity: 0.5;
 }
 
 .size-controls {
   display: flex;
   flex-direction: row;
-
 }
 
 .row {
