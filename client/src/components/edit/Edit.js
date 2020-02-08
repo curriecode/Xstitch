@@ -56,6 +56,7 @@ export default function Edit(props) {
   const [zIndex, setzIndex] = useState(1000);
   const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
 
+  // useEffect for image overlay
   useEffect(() => {
     if (moveImage) {
       setzIndex(1000);
