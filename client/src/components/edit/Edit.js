@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Grid from "./Grid";
 import History from "./History";
 import "./Edit.css";
@@ -9,7 +9,8 @@ import html2canvas from "html2canvas";
 import ColorPicker from "./control-panel/ColorPicker";
 import PixelSizeButtons from "./control-panel/PixelSizeButtons";
 import RowColumnButtons from "./control-panel/RowColumnButtons";
-import TextInputs from "./control-panel/TextInputs"
+import TextInputs from "./control-panel/TextInputs";
+import MoveImageToggle from "./control-panel/MoveImageToggle";
 
 //imports for image overlay/drag and drop
 import ImageOverlay from "./image-overlay/ImageOverlay";
@@ -22,19 +23,18 @@ export default function Edit(props) {
   const [pattern, updatePattern] = useState(
     props.setClickedView.colours || blankPattern
   );
-  console.log("pataern data from edit", pattern)
+  console.log("pataern data from edit", pattern);
   const [pixelSize, setPixelSize] = useState("medium");
 
-
   useEffect(() => {
-    console.log("insdie useEffect")
-    console.log("this pattern in useEffect", props.thisPattern)
+    console.log("insdie useEffect");
+    console.log("this pattern in useEffect", props.thisPattern);
     if (props.thisPattern === undefined) {
-      updatePattern(blankPattern)
-      props.setHistory([])
+      updatePattern(blankPattern);
+      props.setHistory([]);
     }
-    console.log("after update")
-  }, [])
+    console.log("after update");
+  }, []);
 
   //default array for rendering grid
   for (let i = 0; i < 25; i++) {
@@ -50,6 +50,19 @@ export default function Edit(props) {
   // used to show/hide the history tab
   const [history, viewHistory] = useState("hide");
   let historyTab;
+
+  // image overlay
+  const [moveImage, setMoveImage] = useState(true);
+  const [zIndex, setzIndex] = useState(1000);
+  const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
+
+  useEffect(() => {
+    if (moveImage) {
+      setzIndex(1000);
+    } else {
+      setzIndex(0);
+    }
+  }, [moveImage]);
 
   function updateColor(input) {
     const newPattern = pattern.map((row, rowIndex) => {
@@ -199,18 +212,18 @@ export default function Edit(props) {
     <section className="edit">
       <div className="grid-history">
         <DndProvider backend={Backend}>
-          <ImageOverlay imageURL={imageURL} />
+          <ImageOverlay imageURL={imageURL} zIndex={zIndex} />
         </DndProvider>
         <Grid pattern={pattern} updateColor={updateColor} size={pixelSize} />
         {historyTab}
       </div>
       <div className="controls" style={{ backgroundColor: color }}>
-        <TextInputs 
-        handleTitleChange={handleTitleChange}
-        handleDescriptionChange={handleDescriptionChange}
-        setImageURL={setImageURL}
-        
+        <TextInputs
+          handleTitleChange={handleTitleChange}
+          handleDescriptionChange={handleDescriptionChange}
+          setImageURL={setImageURL}
         />
+        <MoveImageToggle moveImage={moveImage} toggle={toggle}/>
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
           <RowColumnButtons
