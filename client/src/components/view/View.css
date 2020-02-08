@@ -19,6 +19,7 @@
 }
 
 .view-grid {
+  background-color: white;
   box-shadow: 5px 5px 5px #888;
 }
 
@@ -30,9 +31,10 @@
 }
 
 .view-pixel {
+  border-top: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
   width: 15px;
   height: 15px;
-  margin: 0.5px;
 }
 
 #pdf {
