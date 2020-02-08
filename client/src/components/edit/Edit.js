@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "./control-panel/ColorPicker";
 import Grid from "./Grid";
 import History from "./History";
 import "./Edit.css";
 import { Button } from "semantic-ui-react";
 import html2canvas from "html2canvas";
-import PixelSizeButtons from "./PixelSizeButtons";
-import RowColumnButtons from "./RowColumnButtons";
+import PixelSizeButtons from "./control-panel/PixelSizeButtons";
+import RowColumnButtons from "./control-panel/RowColumnButtons";
 
 //imports for image overlay/drag and drop
 import ImageOverlay from "./image-overlay/ImageOverlay";
