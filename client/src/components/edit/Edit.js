@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import ColorPicker from "./ColorPicker";
 import Grid from "./Grid";
 import History from "./History";
 import "./Edit.css";
 import { Button } from "semantic-ui-react";
 import html2canvas from "html2canvas";
-import PixelSizeButtons from "./PixelSizeButtons";
-import RowColumnButtons from "./RowColumnButtons";
+
+//control panel components
+import ColorPicker from "./control-panel/ColorPicker";
+import PixelSizeButtons from "./control-panel/PixelSizeButtons";
+import RowColumnButtons from "./control-panel/RowColumnButtons";
+import TextInputs from "./control-panel/TextInputs"
+
 
 //imports for image overlay/drag and drop
 import ImageOverlay from "./image-overlay/ImageOverlay";
@@ -206,49 +210,12 @@ export default function Edit(props) {
         {historyTab}
       </div>
       <div className="controls" style={{ backgroundColor: color }}>
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon1">
-              Title
-            </span>
-          </div>
-          <input
-            // o={title}
-            type="text"
-            className="form-control"
-            aria-label="Title"
-            aria-describedby="basic-addon1"
-            onChange={handleTitleChange}
-          ></input>
-        </div>
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon1">
-              Description
-            </span>
-          </div>
-          <input
-            // value={form.description}
-            type="text"
-            className="form-control"
-            aria-label="Description"
-            aria-describedby="basic-addon1"
-            onChange={handleDescriptionChange}
-          ></input>
-        </div>
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Image URL</span>
-          </div>
-          <input
-            type="text"
-            className="form-control"
-            aria-label="URL"
-            onChange={event => {
-              setImageURL(event.target.value);
-            }}
-          ></input>
-        </div>
+        <TextInputs 
+        handleTitleChange={handleTitleChange}
+        handleDescriptionChange={handleDescriptionChange}
+        setImageURL={setImageURL}
+        
+        />
         <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
         <div className="size-controls">
           <RowColumnButtons
