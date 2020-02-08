@@ -1,32 +1,10 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React from 'react'
 import Container from './Container'
 export default function ImageOverlay(props) {
-  const [moveImage, setMoveImage] = useState(true);
-  const [zIndex, setzIndex] = useState(1000)
-  const toggle = useCallback(() => setMoveImage(!moveImage), [
-    moveImage,
-  ])
-
-  useEffect(() => {
-    if (moveImage) {
-      setzIndex(1000);
-    } else {
-      setzIndex(0);
-    }
-  }, [moveImage])
 
   return (
     <div>
-      <Container zIndex={zIndex} imageURL={props.imageURL}/>
-      <label htmlFor="moveImage" style={{ zIndex: 1001, position: 'fixed'}}>
-          <input
-            id="moveImage"
-            type="checkbox"
-            checked={moveImage}
-            onChange={toggle}
-          />
-          <small>Move image</small>
-        </label>
+      <Container zIndex={props.zIndex} imageURL={props.imageURL}/>
     </div>
   )
 }
