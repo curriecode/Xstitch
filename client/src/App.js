@@ -38,7 +38,6 @@ export default function App() {
         const checkpointHistory = res.data.filter(item => {
           return item.pattern_id === checkpoint.pattern_id;
         });
-        console.log("here")
         setHistory([...checkpointHistory]);
       })
       .catch(err => {
@@ -87,8 +86,8 @@ export default function App() {
     axios
       .post("api/checkpoints", reqData)
       .then(res => {
-        getCheckpointHistory()
         setCheckpoint(res.data);
+        getCheckpointHistory();
       })
       .catch(error => {
         return alert("Could not update because: ", error);
@@ -99,7 +98,6 @@ export default function App() {
     if (pattern && checkpoint) {
       createCheckpoint(data);
       getCheckpointHistory();
-
     } else {
       createPattern(data);
     }
@@ -147,8 +145,7 @@ export default function App() {
       }
     });
   }
-  // console.log("pattern data", pattern)
-  // console.log("checkpoint data", checkpoint)
+
   function forkPattern() {
     let currentUser = user.id;
     if (!currentUser) {
@@ -239,11 +236,7 @@ export default function App() {
     }
   }
 
-  // console.log("this is current pattern in state", pattern)
-  // console.log("this is current checkpoint in state", checkpoint)
-
   //clears pattern and resets state when create button is clicked
-  //TODO does not yet reset grid bc grid state lives in sub component
   function clearAndSetCreate() {
     setPattern(null);
     setCheckpoint({});
