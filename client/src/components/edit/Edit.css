@@ -23,8 +23,6 @@
   width: 100%;
   height: 100%;
   overflow: scroll;
-  /* set to allow image to be hidden behind grid when not in move image mode */
-  /* z-index: 10; */
 }
 
 .hidden {
@@ -70,25 +68,22 @@
 .pixel {
   border-top: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
-  z-index: 2000
+  z-index: 100
 }
 
 .small {
   width: 8px;
   height: 8px;
-  /* margin: 0.5px; */
 }
 
 .medium {
   width: 15px;
   height: 15px;
-  /* margin: 0.5px; */
 }
 
 .large {
   width: 30px;
   height: 30px;
-  /* margin: 0.5px; */
 }
 
 .controls {
@@ -108,14 +103,11 @@
   box-shadow: 2px 2px 5px #888;
   /* the container is always slighthly too narrow I can't figure out why so I've added padding */
   padding: 0px 15px;
-  z-index: 5;
-  opacity: 0.5;
 }
 
 .size-controls {
   display: flex;
   flex-direction: row;
-
 }
 
 .row {

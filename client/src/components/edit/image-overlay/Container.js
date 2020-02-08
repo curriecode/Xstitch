@@ -6,7 +6,8 @@ import Box from "./Box";
 const styles = {
   width: "80%",
   height: "100%",
-  position: "fixed"
+  position: "fixed",
+  opacity: "75%"
 };
 
 const Container = props => {
