@@ -15,7 +15,7 @@ export default function HistoryCard(props) {
 
 
   }
-  console.log("this  is item from history card", props.item)
+  // console.log("this  is item from history card", props.item)
   return (
     <div className="history-card">
       <Card>

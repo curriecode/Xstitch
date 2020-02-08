@@ -87,6 +87,7 @@ export default function App() {
       .post("api/checkpoints", reqData)
       .then(res => {
         setCheckpoint(res.data);
+        getCheckpointHistory();
       })
       .catch(error => {
         return alert("Could not update because: ", error);
@@ -99,7 +100,6 @@ export default function App() {
       getCheckpointHistory();
     } else {
       createPattern(data);
-      // getCheckpointHistory()
     }
   }
 
@@ -145,8 +145,7 @@ export default function App() {
       }
     });
   }
-  console.log("pattern data", pattern)
-  console.log("checkpoint data", checkpoint)
+
   function forkPattern() {
     let currentUser = user.id;
     if (!currentUser) {
@@ -184,7 +183,6 @@ export default function App() {
         setClickedView={clickedView}
         setPage={page}
         setHistory={setHistory}
-
       />
     );
   } else if (page === "view") {
@@ -237,11 +235,7 @@ export default function App() {
     }
   }
 
-  // console.log("this is current pattern in state", pattern)
-  // console.log("this is current checkpoint in state", checkpoint)
-
   //clears pattern and resets state when create button is clicked
-  //TODO does not yet reset grid bc grid state lives in sub component
   function clearAndSetCreate() {
     setPattern(null);
     setCheckpoint({});
