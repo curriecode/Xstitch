@@ -11,7 +11,6 @@ import PixelSizeButtons from "./control-panel/PixelSizeButtons";
 import RowColumnButtons from "./control-panel/RowColumnButtons";
 import TextInputs from "./control-panel/TextInputs"
 
-
 //imports for image overlay/drag and drop
 import ImageOverlay from "./image-overlay/ImageOverlay";
 import { DndProvider } from "react-dnd";
@@ -46,13 +45,11 @@ export default function Edit(props) {
   }
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  // const [image, setImage] = useState(null)
+  const [imageURL, setImageURL] = useState("");
 
   // used to show/hide the history tab
   const [history, viewHistory] = useState("hide");
   let historyTab;
-
-  const [imageURL, setImageURL] = useState("");
 
   function updateColor(input) {
     const newPattern = pattern.map((row, rowIndex) => {
@@ -192,12 +189,10 @@ export default function Edit(props) {
 
   function handleTitleChange(event) {
     setTitle(event.target.value);
-    // console.log("title here", event.target.value);
   }
 
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
-    // console.log("description here", event.target.value);
   }
 
   return (
@@ -242,7 +237,6 @@ export default function Edit(props) {
           Save
         </Button>
       </div>
-      {/* </div> */}
     </section>
   );
 }
