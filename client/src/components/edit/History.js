@@ -4,7 +4,7 @@ import HistoryCard from "./HistoryCard";
 export default function History(props) {
   // let viewPage = props.setViewPage
   const cards = props.history.map((card, index) => {
-    console.log("this is card in history", card)
+    // console.log("this is card in history", card)
     return <HistoryCard
       setHistoryView={props.setHistoryView}
       setCheckpoint={props.setCheckpoint}

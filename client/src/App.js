@@ -38,6 +38,7 @@ export default function App() {
         const checkpointHistory = res.data.filter(item => {
           return item.pattern_id === checkpoint.pattern_id;
         });
+        console.log("here")
         setHistory([...checkpointHistory]);
       })
       .catch(err => {
@@ -86,6 +87,7 @@ export default function App() {
     axios
       .post("api/checkpoints", reqData)
       .then(res => {
+        getCheckpointHistory()
         setCheckpoint(res.data);
       })
       .catch(error => {
@@ -97,9 +99,9 @@ export default function App() {
     if (pattern && checkpoint) {
       createCheckpoint(data);
       getCheckpointHistory();
+
     } else {
       createPattern(data);
-      // getCheckpointHistory()
     }
   }
 
@@ -145,8 +147,8 @@ export default function App() {
       }
     });
   }
-  console.log("pattern data", pattern)
-  console.log("checkpoint data", checkpoint)
+  // console.log("pattern data", pattern)
+  // console.log("checkpoint data", checkpoint)
   function forkPattern() {
     let currentUser = user.id;
     if (!currentUser) {
