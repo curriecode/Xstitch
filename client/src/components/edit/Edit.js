@@ -19,13 +19,10 @@ export default function Edit(props) {
 
 
   useEffect(() => {
-    // console.log("insdie useEffect")
-    // console.log("this pattern in useEffect", props.thisPattern)
     if (props.thisPattern === undefined) {
       updatePattern(blankPattern)
       props.setHistory([])
     }
-    // console.log("after update")
   }, [])
 
   //default array for rendering grid
@@ -246,7 +243,6 @@ export default function Edit(props) {
         <Button content="Version history" onClick={toggleHistory} />
         <Button
           onClick={() => {
-            console.log("props within save", props);
             save(title, description);
           }}
         >

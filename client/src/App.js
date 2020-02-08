@@ -183,7 +183,6 @@ export default function App() {
         setClickedView={clickedView}
         setPage={page}
         setHistory={setHistory}
-
       />
     );
   } else if (page === "view") {
