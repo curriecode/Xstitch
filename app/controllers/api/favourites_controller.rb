@@ -23,8 +23,6 @@ class Api::FavouritesController < ApplicationController
   end
 
   def destroy
-    # puts "Inside favourite controller - destroy"
-    # puts params.to_s
     @favourite = Favourite.find params[:id]
     @favourite.destroy
   end
