@@ -52,7 +52,7 @@ export default function Edit(props) {
   let historyTab;
 
   // image overlay
-  const [moveImage, setMoveImage] = useState(true);
+  const [moveImage, setMoveImage] = useState(false);
   const [zIndex, setzIndex] = useState(1000);
   const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
 
@@ -211,7 +211,7 @@ export default function Edit(props) {
 
   return (
     <section className="edit">
-      <div className="grid-history">
+      <div className="grid-history" style={{ zIndex: "100"}}>
         <DndProvider backend={Backend}>
           <ImageOverlay imageURL={imageURL} zIndex={zIndex} />
         </DndProvider>
