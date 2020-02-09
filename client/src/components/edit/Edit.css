@@ -92,7 +92,6 @@
   flex-direction: column;
   justify-content: space-around;
   padding: 10px;
-  background-color: darkgrey;
   width: 300px;
 }
 
@@ -100,7 +99,6 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  box-shadow: 2px 2px 5px #888;
   /* the container is always slighthly too narrow I can't figure out why so I've added padding */
   padding: 0px 15px;
 }
