@@ -89,7 +89,7 @@ export default function Edit(props) {
   function addRowBottom() {
     const newRow = [];
     for (let i = 0; i < pattern[0].length; i++) {
-      newRow.push("#ffffff");
+      newRow.push("#ffffff00");
     }
     updatePattern(prev => [...prev, newRow]);
   }
@@ -97,7 +97,7 @@ export default function Edit(props) {
   function addRowTop() {
     const newRow = [];
     for (let i = 0; i < pattern[0].length; i++) {
-      newRow.push("#ffffff");
+      newRow.push("#ffffff00");
     }
     updatePattern(prev => [newRow, ...prev]);
   }
@@ -114,7 +114,7 @@ export default function Edit(props) {
     updatePattern(prev => {
       let newPattern = [];
       prev.forEach(row => {
-        row.push("#ffffff");
+        row.push("#ffffff00");
         newPattern.push(row);
       });
       return newPattern;
@@ -125,7 +125,7 @@ export default function Edit(props) {
     updatePattern(prev => {
       let newPattern = [];
       prev.forEach(row => {
-        row.unshift("#ffffff");
+        row.unshift("#ffffff00");
         newPattern.push(row);
       });
       return newPattern;
@@ -178,11 +178,12 @@ export default function Edit(props) {
   function createImage() {
     let input = document.getElementById("capture");
     return html2canvas(input, {
-      backgroundColor: "grey"
+      backgroundColor: "black"
     }).then(canvas => {
       return canvas.toDataURL("image/png");
     });
   }
+
 
   //creates new pattern or checkpoint in the database when save is clicked
   function save(title, description) {
