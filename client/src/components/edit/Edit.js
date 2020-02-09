@@ -23,7 +23,6 @@ export default function Edit(props) {
   const [pattern, updatePattern] = useState(
     props.setClickedView.colours || blankPattern
   );
-  // console.log("pataern data from edit", pattern)
 
   const [pixelSize, setPixelSize] = useState("medium");
 
@@ -35,7 +34,6 @@ export default function Edit(props) {
     }
   }, [])
 
-
   //default array for rendering grid
   for (let i = 0; i < 25; i++) {
     blankPattern.push([]);
@@ -43,6 +41,7 @@ export default function Edit(props) {
       blankPattern[i].push("#ffffff00");
     }
   }
+  
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [imageURL, setImageURL] = useState("");
