@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useReducer } from "react";
 import Grid from "./Grid";
 import History from "./History";
 import "./Edit.css";
@@ -17,22 +17,82 @@ import ImageOverlay from "./image-overlay/ImageOverlay";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "paint":
+      return {
+        ...state,
+        pattern: state.pattern.map((row, rowIndex) => {
+          if (rowIndex === action.location[0]) {
+            return row.map((pixel, pixelIndex) => {
+              if (pixelIndex === action.location[1]) {
+                return (row[pixelIndex] = state.color);
+              } else {
+                return pixel;
+              }
+            });
+          } else {
+            return row;
+          }
+        })
+      };
+    case "setColor":
+      return { ...state, color: action.value };
+    case "addRowTop":
+      const newRow = [];
+      for (let i = 0; i < state.pattern[0].length; i++) {
+        newRow.push("#ffffff00");
+      }
+      return { ...state, pattern: [newRow, ...state.pattern] };
+    case "addRowBottom":
+      const bottomRow = [];
+      for (let i = 0; i < state.pattern[0].length; i++) {
+        bottomRow.push("#ffffff00");
+      }
+      return { ...state, pattern: [...state.pattern, bottomRow] };
+    case "addColumnRight":
+      let newPattern = [];
+      state.pattern.forEach(row => {
+        row.push("#ffffff00");
+        newPattern.push(row);
+      });
+      return { ...state, pattern: newPattern };
+    case "addColumnLeft":
+      const addLeft = [];
+      state.pattern.forEach(row => {
+        row.unshift("#ffffff00");
+        addLeft.push(row);
+      });
+      return { ...state, pattern: addLeft };
+    case "deleteRowTop":
+      return {
+        ...state,
+        pattern: state.pattern.slice(1, state.pattern.length)
+      };
+    case "deleteRowBottom":
+      return {
+        ...state,
+        pattern: state.pattern.slice(0, state.pattern.length - 1)
+      };
+    case "deleteColumnRight":
+      const deleteRight = [];
+      state.pattern.forEach(row => {
+        row.pop();
+        deleteRight.push(row);
+      });
+      return { ...state, pattern: deleteRight };
+    case "deleteColumnLeft":
+      const deleteLeft = [];
+      state.pattern.forEach(row => {
+        row.shift();
+        deleteLeft.push(row);
+      });
+      return { ...state, pattern: deleteLeft };
+  }
+}
+
 export default function Edit(props) {
   const blankPattern = [];
-  const [color, setColor] = useState("#9B9B9B");
-  const [pattern, updatePattern] = useState(
-    props.setClickedView.colours || blankPattern
-  );
-
-  const [pixelSize, setPixelSize] = useState("medium");
-
-  useEffect(() => {
-
-    if (props.thisPattern === undefined) {
-      updatePattern(blankPattern);
-      props.setHistory([]);
-    }
-  }, [])
 
   //default array for rendering grid
   for (let i = 0; i < 25; i++) {
@@ -41,7 +101,29 @@ export default function Edit(props) {
       blankPattern[i].push("#ffffff00");
     }
   }
-  
+
+  const initialState = {
+    pattern: props.setClickedView.colours || blankPattern,
+    color: "#9B9B9B"
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const [color, setColor] = useState("#9B9B9B");
+  // const [pattern, updatePattern] = useState(
+  //   props.setClickedView.colours || blankPattern
+  // );
+
+  const [pixelSize, setPixelSize] = useState("medium");
+
+  useEffect(() => {
+    console.log("state.pattern is", state.pattern);
+    if (props.thisPattern === undefined) {
+      // updatePattern(blankPattern);
+      props.setHistory([]);
+    }
+  }, []);
+
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [imageURL, setImageURL] = useState("");
@@ -65,92 +147,39 @@ export default function Edit(props) {
   }, [moveImage]);
 
   function updateColor(input) {
-    const newPattern = pattern.map((row, rowIndex) => {
-      if (rowIndex === input[0]) {
-        return row.map((pixel, pixelIndex) => {
-          if (pixelIndex === input[1]) {
-            return (row[pixelIndex] = color);
-          } else {
-            return pixel;
-          }
-        });
-      } else {
-        return row;
-      }
-    });
-    updatePattern(newPattern);
-  }
-
-  function handleChangeComplete(input) {
-    setColor(input.hex);
+    dispatch({ type: "paint", location: input });
   }
 
   function addRowBottom() {
-    const newRow = [];
-    for (let i = 0; i < pattern[0].length; i++) {
-      newRow.push("#ffffff00");
-    }
-    updatePattern(prev => [...prev, newRow]);
+    dispatch({ type: "addRowBottom" });
   }
 
   function addRowTop() {
-    const newRow = [];
-    for (let i = 0; i < pattern[0].length; i++) {
-      newRow.push("#ffffff00");
-    }
-    updatePattern(prev => [newRow, ...prev]);
+    dispatch({ type: "addRowTop" });
   }
 
   function deleteRowTop() {
-    updatePattern(pattern.slice(1, pattern.length));
+    dispatch({ type: "deleteRowTop" });
   }
 
   function deleteRowBottom() {
-    updatePattern(pattern.slice(0, pattern.length - 1));
+    dispatch({ type: "deleteRowBottom" });
   }
 
   function addColumnRight() {
-    updatePattern(prev => {
-      let newPattern = [];
-      prev.forEach(row => {
-        row.push("#ffffff00");
-        newPattern.push(row);
-      });
-      return newPattern;
-    });
+    dispatch({ type: "addColumnRight" });
   }
 
   function addColumnLeft() {
-    updatePattern(prev => {
-      let newPattern = [];
-      prev.forEach(row => {
-        row.unshift("#ffffff00");
-        newPattern.push(row);
-      });
-      return newPattern;
-    });
+    dispatch({ type: "addColumnLeft" });
   }
 
   function deleteColumnRight() {
-    updatePattern(prev => {
-      let newPattern = [];
-      prev.forEach(row => {
-        row.pop();
-        newPattern.push(row);
-      });
-      return newPattern;
-    });
+    dispatch({ type: "deleteColumnRight" });
   }
 
   function deleteColumnLeft() {
-    updatePattern(prev => {
-      let newPattern = [];
-      prev.forEach(row => {
-        row.shift();
-        newPattern.push(row);
-      });
-      return newPattern;
-    });
+    dispatch({ type: "deleteColumnLeft" });
   }
 
   function toggleHistory() {
@@ -183,14 +212,13 @@ export default function Edit(props) {
     });
   }
 
-
   //creates new pattern or checkpoint in the database when save is clicked
   function save(title, description) {
     return createImage().then(image => {
       let saveData = {
         description: description,
         title: title,
-        colours: pattern,
+        colours: state.pattern,
         image_url: image
       };
       props.saveHandler(saveData);
@@ -211,25 +239,34 @@ export default function Edit(props) {
 
   return (
     <section className="edit">
-      <div className="grid-history" style={{ zIndex: "100"}}>
+      <div className="grid-history" style={{ zIndex: "100" }}>
         <DndProvider backend={Backend}>
           <ImageOverlay imageURL={imageURL} zIndex={zIndex} />
         </DndProvider>
-        <Grid pattern={pattern} updateColor={updateColor} size={pixelSize} />
+        <Grid
+          pattern={state.pattern}
+          updateColor={updateColor}
+          size={pixelSize}
+        />
         {historyTab}
       </div>
-      <div className="controls" style={{ backgroundColor: color }}>
+      <div className="controls" style={{ backgroundColor: state.color }}>
         <TextInputs
           handleTitleChange={handleTitleChange}
           handleDescriptionChange={handleDescriptionChange}
           setImageURL={setImageURL}
         />
-        <MoveImageToggle moveImage={moveImage} toggle={toggle}/>
-        <ColorPicker color={color} onChangeComplete={handleChangeComplete} />
+        <MoveImageToggle moveImage={moveImage} toggle={toggle} />
+        <ColorPicker
+          color={state.color}
+          onChangeComplete={input =>
+            dispatch({ type: "setColor", value: input.hex })
+          }
+        />
         <div className="size-controls">
           <RowColumnButtons
-            patternRows={pattern.length}
-            patternColumns={pattern[0].length}
+            patternRows={state.pattern.length}
+            patternColumns={state.pattern[0].length}
             addRowTop={addRowTop}
             deleteRowTop={deleteRowTop}
             addRowBottom={addRowBottom}
