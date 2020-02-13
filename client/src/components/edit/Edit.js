@@ -88,13 +88,16 @@ function reducer(state, action) {
         deleteLeft.push(row);
       });
       return { ...state, pattern: deleteLeft };
+    case "reset":
+      // clears grid, blankPattern is dispatched as value
+      return { ...state, pattern: action.value };
   }
 }
 
 export default function Edit(props) {
-  const blankPattern = [];
-
+  
   //default array for rendering grid
+  const blankPattern = [];
   for (let i = 0; i < 25; i++) {
     blankPattern.push([]);
     for (let j = 0; j < 25; j++) {
@@ -112,9 +115,9 @@ export default function Edit(props) {
   const [pixelSize, setPixelSize] = useState("medium");
 
   useEffect(() => {
-    console.log("state.pattern is", state.pattern);
     if (props.thisPattern === undefined) {
-      // updatePattern(blankPattern);
+      // clears grid if user leaves and then returns to edit page
+      dispatch({ type: "reset", value: blankPattern });
       props.setHistory([]);
     }
   }, []);
