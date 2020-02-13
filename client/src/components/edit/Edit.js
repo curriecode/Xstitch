@@ -29,11 +29,10 @@ for (let i = 0; i < 25; i++) {
 
 export default function Edit(props) {
   // useReducer
-  const initialState = {
+  const [state, dispatch] = useReducer(reducer, {
     pattern: props.setClickedView.colours || blankPattern,
     color: "#9B9B9B"
-  };
-  const [state, dispatch] = useReducer(reducer, initialState);
+  });
 
   // useState
   const [pixelSize, setPixelSize] = useState("medium");
@@ -79,7 +78,7 @@ export default function Edit(props) {
     );
   }
 
-  // creates image from grid 
+  // creates image from grid
   // encodes as string to be saved in database
   function createImage() {
     let input = document.getElementById("capture");
