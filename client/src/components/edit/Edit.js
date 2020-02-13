@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useReducer } from "react";
+import reducer from "../../reducers/reducer"
 import Grid from "./Grid";
 import History from "./History";
 import "./Edit.css";
@@ -17,82 +18,6 @@ import ImageOverlay from "./image-overlay/ImageOverlay";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "paint":
-      return {
-        ...state,
-        pattern: state.pattern.map((row, rowIndex) => {
-          if (rowIndex === action.location[0]) {
-            return row.map((pixel, pixelIndex) => {
-              if (pixelIndex === action.location[1]) {
-                return (row[pixelIndex] = state.color);
-              } else {
-                return pixel;
-              }
-            });
-          } else {
-            return row;
-          }
-        })
-      };
-    case "setColor":
-      return { ...state, color: action.value };
-    case "addRowTop":
-      const newRow = [];
-      for (let i = 0; i < state.pattern[0].length; i++) {
-        newRow.push("#ffffff00");
-      }
-      return { ...state, pattern: [newRow, ...state.pattern] };
-    case "addRowBottom":
-      const bottomRow = [];
-      for (let i = 0; i < state.pattern[0].length; i++) {
-        bottomRow.push("#ffffff00");
-      }
-      return { ...state, pattern: [...state.pattern, bottomRow] };
-    case "addColumnRight":
-      let newPattern = [];
-      state.pattern.forEach(row => {
-        row.push("#ffffff00");
-        newPattern.push(row);
-      });
-      return { ...state, pattern: newPattern };
-    case "addColumnLeft":
-      const addLeft = [];
-      state.pattern.forEach(row => {
-        row.unshift("#ffffff00");
-        addLeft.push(row);
-      });
-      return { ...state, pattern: addLeft };
-    case "deleteRowTop":
-      return {
-        ...state,
-        pattern: state.pattern.slice(1, state.pattern.length)
-      };
-    case "deleteRowBottom":
-      return {
-        ...state,
-        pattern: state.pattern.slice(0, state.pattern.length - 1)
-      };
-    case "deleteColumnRight":
-      const deleteRight = [];
-      state.pattern.forEach(row => {
-        row.pop();
-        deleteRight.push(row);
-      });
-      return { ...state, pattern: deleteRight };
-    case "deleteColumnLeft":
-      const deleteLeft = [];
-      state.pattern.forEach(row => {
-        row.shift();
-        deleteLeft.push(row);
-      });
-      return { ...state, pattern: deleteLeft };
-    case "reset":
-      // clears grid, blankPattern is dispatched as value
-      return { ...state, pattern: action.value };
-  }
-}
 
 export default function Edit(props) {
   
