@@ -4,22 +4,31 @@ import { FaArrowsAltH, FaArrowsAltV } from "react-icons/fa";
 export default function RowColumnButtons(props) {
   return (
     <div className="row-column-buttons">
-      <button className="column-button-add" onClick={props.addColumnLeft}>
+      <button
+        className="column-button-add"
+        onClick={() => props.modifyGrid("addLeft")}
+      >
         <span>+ Column</span>
       </button>
       <div className="row-buttons">
-        <button className="row-button-add" onClick={props.addRowTop}>
+        <button
+          className="row-button-add"
+          onClick={() => props.modifyGrid("addTop")}
+        >
           <span>+ Row</span>
         </button>
         <div className="button-container">
           <button
             className="column-button-delete"
-            onClick={props.deleteColumnLeft}
+            onClick={() => props.modifyGrid("deleteLeft")}
           >
             <span>- Column</span>
           </button>
           <div className="button-container-inner">
-            <button className="row-button-delete" onClick={props.deleteRowTop}>
+            <button
+              className="row-button-delete"
+              onClick={() => props.modifyGrid("deleteTop")}
+            >
               <span>- Row</span>
             </button>
             <div className="grid-size-container">
@@ -32,23 +41,29 @@ export default function RowColumnButtons(props) {
             </div>
             <button
               className="row-button-delete"
-              onClick={props.deleteRowBottom}
+              onClick={() => props.modifyGrid("deleteBottom")}
             >
               <span>- Row</span>
             </button>
           </div>
           <button
             className="column-button-delete"
-            onClick={props.deleteColumnRight}
+            onClick={() => props.modifyGrid("deleteRight")}
           >
             <span>- Column</span>
           </button>
         </div>
-        <button className="row-button-add" onClick={props.addRowBottom}>
+        <button
+          className="row-button-add"
+          onClick={() => props.modifyGrid("addBottom")}
+        >
           <span>+ Row</span>
         </button>
       </div>
-      <button className="column-button-add" onClick={props.addColumnRight}>
+      <button
+        className="column-button-add"
+        onClick={() => props.modifyGrid("addRight")}
+      >
         <span>+ Column</span>
       </button>
     </div>
