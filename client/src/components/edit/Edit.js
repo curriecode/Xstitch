@@ -115,8 +115,6 @@ export default function Edit(props) {
   }
 
   const modifyGrid = (side) => {
-    console.log(side)
-    // get TURNT
     dispatch({ type: side})
   };
 
@@ -151,14 +149,6 @@ export default function Edit(props) {
             patternRows={state.pattern.length}
             patternColumns={state.pattern[0].length}
             modifyGrid={modifyGrid}
-            addRowTop={() => dispatch({ type: "addRowTop" })}
-            deleteRowTop={() => dispatch({ type: "deleteRowTop" })}
-            addRowBottom={() => dispatch({ type: "addRowBottom" })}
-            deleteRowBottom={() => dispatch({ type: "deleteRowBottom" })}
-            addColumnLeft={() => dispatch({ type: "addColumnLeft" })}
-            deleteColumnLeft={() => dispatch({ type: "deleteColumnLeft" })}
-            addColumnRight={() => dispatch({ type: "addColumnRight" })}
-            deleteColumnRight={() => dispatch({ type: "deleteColumnRight" })}
           />
           <PixelSizeButtons setSize={setSize} />
         </div>
