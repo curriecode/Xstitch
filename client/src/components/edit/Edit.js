@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useReducer } from "react";
-import reducer from "../../reducers/reducer"
 import Grid from "./Grid";
 import History from "./History";
-import "./Edit.css";
 import { Button } from "semantic-ui-react";
 import html2canvas from "html2canvas";
+import reducer from "../../reducers/reducer";
+import "./Edit.css";
 
 //control panel components
 import ColorPicker from "./control-panel/ColorPicker";
@@ -13,69 +13,58 @@ import RowColumnButtons from "./control-panel/RowColumnButtons";
 import TextInputs from "./control-panel/TextInputs";
 import MoveImageToggle from "./control-panel/MoveImageToggle";
 
-//imports for image overlay/drag and drop
+//imports for image overlay
 import ImageOverlay from "./image-overlay/ImageOverlay";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
+//initial blank pattern
+const blankPattern = [];
+for (let i = 0; i < 25; i++) {
+  blankPattern.push([]);
+  for (let j = 0; j < 25; j++) {
+    blankPattern[i].push("#ffffff00");
+  }
+}
 
 export default function Edit(props) {
-  
-  //default array for rendering grid
-  const blankPattern = [];
-  for (let i = 0; i < 25; i++) {
-    blankPattern.push([]);
-    for (let j = 0; j < 25; j++) {
-      blankPattern[i].push("#ffffff00");
-    }
-  }
-
+  // useReducer
   const initialState = {
     pattern: props.setClickedView.colours || blankPattern,
     color: "#9B9B9B"
   };
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // useState
   const [pixelSize, setPixelSize] = useState("medium");
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
 
+  // image overlay
+  const [imageURL, setImageURL] = useState("");
+  const [moveImage, setMoveImage] = useState(false);
+  const [zIndex, setzIndex] = useState(1000);
+  const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
+
+  // clears grid/history if user leaves and then returns to edit page
   useEffect(() => {
     if (props.thisPattern === undefined) {
-      // clears grid if user leaves and then returns to edit page
       dispatch({ type: "reset", value: blankPattern });
       props.setHistory([]);
     }
   }, []);
 
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [imageURL, setImageURL] = useState("");
+  // useEffect for image overlay
+  useEffect(() => {
+    moveImage ? setzIndex(1000) : setzIndex(0);
+  }, [moveImage]);
 
-  // used to show/hide the history tab
+  // show/hide the history tab
   const [history, viewHistory] = useState("hide");
   let historyTab;
 
-  // image overlay
-  const [moveImage, setMoveImage] = useState(false);
-  const [zIndex, setzIndex] = useState(1000);
-  const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
-
-  // useEffect for image overlay
-  useEffect(() => {
-    if (moveImage) {
-      setzIndex(1000);
-    } else {
-      setzIndex(0);
-    }
-  }, [moveImage]);
-
-  function toggleHistory() {
-    if (history === "hide") {
-      viewHistory("show");
-    } else {
-      viewHistory("hide");
-    }
-  }
+  const toggleHistory = () =>
+    history === "hide" ? viewHistory("show") : viewHistory("hide");
 
   if (history === "hide") {
     historyTab = <div></div>;
@@ -90,6 +79,8 @@ export default function Edit(props) {
     );
   }
 
+  // creates image from grid 
+  // encodes as string to be saved in database
   function createImage() {
     let input = document.getElementById("capture");
     return html2canvas(input, {
