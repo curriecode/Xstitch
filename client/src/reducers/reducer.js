@@ -19,50 +19,50 @@ export default function reducer(state, action) {
       };
     case "setColor":
       return { ...state, color: action.value };
-    case "addRowTop":
+    case "addTop":
       const newRow = [];
       for (let i = 0; i < state.pattern[0].length; i++) {
         newRow.push("#ffffff00");
       }
       return { ...state, pattern: [newRow, ...state.pattern] };
-    case "addRowBottom":
+    case "addBottom":
       const bottomRow = [];
       for (let i = 0; i < state.pattern[0].length; i++) {
         bottomRow.push("#ffffff00");
       }
       return { ...state, pattern: [...state.pattern, bottomRow] };
-    case "addColumnRight":
+    case "addRight":
       let newPattern = [];
       state.pattern.forEach(row => {
         row.push("#ffffff00");
         newPattern.push(row);
       });
       return { ...state, pattern: newPattern };
-    case "addColumnLeft":
+    case "addLeft":
       const addLeft = [];
       state.pattern.forEach(row => {
         row.unshift("#ffffff00");
         addLeft.push(row);
       });
       return { ...state, pattern: addLeft };
-    case "deleteRowTop":
+    case "deleteTop":
       return {
         ...state,
         pattern: state.pattern.slice(1, state.pattern.length)
       };
-    case "deleteRowBottom":
+    case "deleteBottom":
       return {
         ...state,
         pattern: state.pattern.slice(0, state.pattern.length - 1)
       };
-    case "deleteColumnRight":
+    case "deleteRight":
       const deleteRight = [];
       state.pattern.forEach(row => {
         row.pop();
         deleteRight.push(row);
       });
       return { ...state, pattern: deleteRight };
-    case "deleteColumnLeft":
+    case "deleteLeft":
       const deleteLeft = [];
       state.pattern.forEach(row => {
         row.shift();
