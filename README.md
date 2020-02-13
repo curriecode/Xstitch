@@ -11,7 +11,7 @@
 
 
 ## Description
-Xstitch is a version control application for creating and editing cross stitch patterns. Users are able to create custom patterns as well as view version history. Forking feature is currently under construction, it will allow a user to fork and edit their own copy of another users pattern as well as fork off of previous versions of their own patterns for further custom editing.
+Xstitch is a version control application inspired by GIT for creating and editing cross stitch patterns. Users are able to create custom patterns, view version history of every save, as well as fork and edit from other users patterns. 
 
 ## Stack
 - Ruby on Rails
@@ -24,9 +24,6 @@ Xstitch is a version control application for creating and editing cross stitch p
 
  ![Gif of homepage](https://github.com/curriecode/Xstitch/blob/master/docs/scroll.gif)
  ![Gif of editing pattern](https://github.com/curriecode/Xstitch/blob/master/docs/edit.gif)
- ![ ](#)
- ![ ](#)
- ![ ](#)
 
 ## Getting started
 1. Clone this repository 
