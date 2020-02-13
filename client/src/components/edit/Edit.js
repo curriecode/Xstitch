@@ -141,42 +141,6 @@ export default function Edit(props) {
     }
   }, [moveImage]);
 
-  function updateColor(input) {
-    dispatch({ type: "paint", location: input });
-  }
-
-  function addRowBottom() {
-    dispatch({ type: "addRowBottom" });
-  }
-
-  function addRowTop() {
-    dispatch({ type: "addRowTop" });
-  }
-
-  function deleteRowTop() {
-    dispatch({ type: "deleteRowTop" });
-  }
-
-  function deleteRowBottom() {
-    dispatch({ type: "deleteRowBottom" });
-  }
-
-  function addColumnRight() {
-    dispatch({ type: "addColumnRight" });
-  }
-
-  function addColumnLeft() {
-    dispatch({ type: "addColumnLeft" });
-  }
-
-  function deleteColumnRight() {
-    dispatch({ type: "deleteColumnRight" });
-  }
-
-  function deleteColumnLeft() {
-    dispatch({ type: "deleteColumnLeft" });
-  }
-
   function toggleHistory() {
     if (history === "hide") {
       viewHistory("show");
@@ -240,7 +204,7 @@ export default function Edit(props) {
         </DndProvider>
         <Grid
           pattern={state.pattern}
-          updateColor={updateColor}
+          updateColor={input => dispatch({ type: "paint", location: input })}
           size={pixelSize}
         />
         {historyTab}
@@ -262,14 +226,14 @@ export default function Edit(props) {
           <RowColumnButtons
             patternRows={state.pattern.length}
             patternColumns={state.pattern[0].length}
-            addRowTop={addRowTop}
-            deleteRowTop={deleteRowTop}
-            addRowBottom={addRowBottom}
-            deleteRowBottom={deleteRowBottom}
-            addColumnLeft={addColumnLeft}
-            deleteColumnLeft={deleteColumnLeft}
-            addColumnRight={addColumnRight}
-            deleteColumnRight={deleteColumnRight}
+            addRowTop={() => dispatch({ type: "addRowTop" })}
+            deleteRowTop={() => dispatch({ type: "deleteRowTop" })}
+            addRowBottom={() => dispatch({ type: "addRowBottom" })}
+            deleteRowBottom={() => dispatch({ type: "deleteRowBottom" })}
+            addColumnLeft={() => dispatch({ type: "addColumnLeft" })}
+            deleteColumnLeft={() => dispatch({ type: "deleteColumnLeft" })}
+            addColumnRight={() => dispatch({ type: "addColumnRight" })}
+            deleteColumnRight={() => dispatch({ type: "deleteColumnRight" })}
           />
           <PixelSizeButtons setSize={setSize} />
         </div>
