@@ -109,11 +109,6 @@ export default function Edit(props) {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [color, setColor] = useState("#9B9B9B");
-  // const [pattern, updatePattern] = useState(
-  //   props.setClickedView.colours || blankPattern
-  // );
-
   const [pixelSize, setPixelSize] = useState("medium");
 
   useEffect(() => {
