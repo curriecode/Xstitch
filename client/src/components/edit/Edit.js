@@ -114,6 +114,12 @@ export default function Edit(props) {
     setDescription(event.target.value);
   }
 
+  const modifyGrid = (side) => {
+    console.log(side)
+    // get TURNT
+    dispatch({ type: side})
+  };
+
   return (
     <section className="edit">
       <div className="grid-history" style={{ zIndex: "100" }}>
@@ -122,7 +128,7 @@ export default function Edit(props) {
         </DndProvider>
         <Grid
           pattern={state.pattern}
-          updateColor={input => dispatch({ type: "paint", location: input })}
+          updateColor={location => dispatch({ type: "paint", location })}
           size={pixelSize}
         />
         {historyTab}
@@ -144,6 +150,7 @@ export default function Edit(props) {
           <RowColumnButtons
             patternRows={state.pattern.length}
             patternColumns={state.pattern[0].length}
+            modifyGrid={modifyGrid}
             addRowTop={() => dispatch({ type: "addRowTop" })}
             deleteRowTop={() => dispatch({ type: "deleteRowTop" })}
             addRowBottom={() => dispatch({ type: "addRowBottom" })}
