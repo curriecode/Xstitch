@@ -40,12 +40,16 @@ export default function Edit(props) {
     moveImage: false
   });
 
-  // image overlay
-  const [moveImage, setMoveImage] = useState(false);
+  // toggle for image overlay
   const toggle = useCallback(
     () => dispatch({ type: "moveImage", moveImage: !state.moveImage }),
     [state.moveImage]
   );
+
+  // useEffect for image overlay
+  useEffect(() => {
+    dispatch({ type: "zIndex", zIndex: state.moveImage ? 1000 : 0 });
+  }, [state.moveImage]);
 
   // clears grid/history if user leaves and then returns to edit page
   useEffect(() => {
@@ -54,11 +58,6 @@ export default function Edit(props) {
       props.setHistory([]);
     }
   }, []);
-
-  // useEffect for image overlay
-  useEffect(() => {
-    dispatch({ type: "zIndex", zIndex: state.moveImage ? 1000 : 0 });
-  }, [state.moveImage]);
 
   // show/hide the history tab
   const [history, viewHistory] = useState("hide");
