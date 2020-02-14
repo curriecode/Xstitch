@@ -9,30 +9,6 @@
   text-align: initial
 }
 
-logged-in {
-  color: powderblue;
-  font-size: 20px;
-  font-weight: bolder;
-  margin-top: 40px;
-  background-color: #2884a7;
-  padding: 5px;
-  border-color: none;
-  margin: 10px;
-}
-
-is-loggedin {
-  /* color: red; */
-  background-color: red;
-}
-
-is-not-loggedin {
-  color: transparent;
-  /* margin: 10px,
-  bor
-  marginTop: 40px,
-  borderColor: none */
-}
-
 .navbar {
   position: fixed;
   z-index: 10;
