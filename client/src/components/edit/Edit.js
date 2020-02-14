@@ -31,19 +31,25 @@ export default function Edit(props) {
   // useReducer
   const [state, dispatch] = useReducer(reducer, {
     pattern: props.setClickedView.colours || blankPattern,
-    color: "#9B9B9B"
+    color: "#9B9B9B",
+    pixelSize: "medium",
+    title: "",
+    description: "",
+    imageURL: "",
+    zIndex: 1000,
+    moveImage: false
   });
 
-  // useState
-  const [pixelSize, setPixelSize] = useState("medium");
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
+  // toggle for image overlay
+  const toggle = useCallback(
+    () => dispatch({ type: "moveImage", moveImage: !state.moveImage }),
+    [state.moveImage]
+  );
 
-  // image overlay
-  const [imageURL, setImageURL] = useState("");
-  const [moveImage, setMoveImage] = useState(false);
-  const [zIndex, setzIndex] = useState(1000);
-  const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
+  // useEffect for image overlay
+  useEffect(() => {
+    dispatch({ type: "zIndex", zIndex: state.moveImage ? 1000 : 0 });
+  }, [state.moveImage]);
 
   // clears grid/history if user leaves and then returns to edit page
   useEffect(() => {
@@ -52,11 +58,6 @@ export default function Edit(props) {
       props.setHistory([]);
     }
   }, []);
-
-  // useEffect for image overlay
-  useEffect(() => {
-    moveImage ? setzIndex(1000) : setzIndex(0);
-  }, [moveImage]);
 
   // show/hide the history tab
   const [history, viewHistory] = useState("hide");
@@ -90,11 +91,11 @@ export default function Edit(props) {
   }
 
   //creates new pattern or checkpoint in the database when save is clicked
-  function save(title, description) {
+  function save() {
     return createImage().then(image => {
       let saveData = {
-        description: description,
-        title: title,
+        description: state.description,
+        title: state.title,
         colours: state.pattern,
         image_url: image
       };
@@ -102,38 +103,36 @@ export default function Edit(props) {
     });
   }
 
-  function setSize(input) {
-    setPixelSize(input);
-  }
-
-  function handleTitleChange(event) {
-    setTitle(event.target.value);
-  }
-
-  function handleDescriptionChange(event) {
-    setDescription(event.target.value);
-  }
+  const modifyGrid = side => {
+    dispatch({ type: side });
+  };
 
   return (
     <section className="edit">
       <div className="grid-history" style={{ zIndex: "100" }}>
         <DndProvider backend={Backend}>
-          <ImageOverlay imageURL={imageURL} zIndex={zIndex} />
+          <ImageOverlay imageURL={state.imageURL} zIndex={state.zIndex} />
         </DndProvider>
         <Grid
           pattern={state.pattern}
-          updateColor={input => dispatch({ type: "paint", location: input })}
-          size={pixelSize}
+          updateColor={location => dispatch({ type: "paint", location })}
+          size={state.pixelSize}
         />
         {historyTab}
       </div>
       <div className="controls" style={{ backgroundColor: state.color }}>
         <TextInputs
-          handleTitleChange={handleTitleChange}
-          handleDescriptionChange={handleDescriptionChange}
-          setImageURL={setImageURL}
+          handleTitleChange={event =>
+            dispatch({ type: "title", title: event.target.value })
+          }
+          handleDescriptionChange={event =>
+            dispatch({ type: "description", description: event.target.value })
+          }
+          setImageURL={event =>
+            dispatch({ type: "imageURL", imageURL: event.target.value })
+          }
         />
-        <MoveImageToggle moveImage={moveImage} toggle={toggle} />
+        <MoveImageToggle moveImage={state.moveImage} toggle={toggle} />
         <ColorPicker
           color={state.color}
           onChangeComplete={input =>
@@ -144,25 +143,14 @@ export default function Edit(props) {
           <RowColumnButtons
             patternRows={state.pattern.length}
             patternColumns={state.pattern[0].length}
-            addRowTop={() => dispatch({ type: "addRowTop" })}
-            deleteRowTop={() => dispatch({ type: "deleteRowTop" })}
-            addRowBottom={() => dispatch({ type: "addRowBottom" })}
-            deleteRowBottom={() => dispatch({ type: "deleteRowBottom" })}
-            addColumnLeft={() => dispatch({ type: "addColumnLeft" })}
-            deleteColumnLeft={() => dispatch({ type: "deleteColumnLeft" })}
-            addColumnRight={() => dispatch({ type: "addColumnRight" })}
-            deleteColumnRight={() => dispatch({ type: "deleteColumnRight" })}
+            modifyGrid={modifyGrid}
           />
-          <PixelSizeButtons setSize={setSize} />
+          <PixelSizeButtons
+            setSize={size => dispatch({ type: "pixelSize", size })}
+          />
         </div>
         <Button content="Version history" onClick={toggleHistory} />
-        <Button
-          onClick={() => {
-            save(title, description);
-          }}
-        >
-          Save
-        </Button>
+        <Button onClick={() => save()}>Save</Button>
       </div>
     </section>
   );
