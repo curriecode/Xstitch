@@ -32,7 +32,8 @@ export default function Edit(props) {
   const [state, dispatch] = useReducer(reducer, {
     pattern: props.setClickedView.colours || blankPattern,
     color: "#9B9B9B",
-    pixelSize: "medium"
+    pixelSize: "medium",
+    title: ""
   });
 
   // useState
@@ -90,20 +91,16 @@ export default function Edit(props) {
   }
 
   //creates new pattern or checkpoint in the database when save is clicked
-  function save(title, description) {
+  function save(description) {
     return createImage().then(image => {
       let saveData = {
         description: description,
-        title: title,
+        title: state.title,
         colours: state.pattern,
         image_url: image
       };
       props.saveHandler(saveData);
     });
-  }
-
-  function handleTitleChange(event) {
-    setTitle(event.target.value);
   }
 
   function handleDescriptionChange(event) {
@@ -129,7 +126,9 @@ export default function Edit(props) {
       </div>
       <div className="controls" style={{ backgroundColor: state.color }}>
         <TextInputs
-          handleTitleChange={handleTitleChange}
+          handleTitleChange={(event) =>
+            dispatch({ type: "title", title: event.target.value })
+          }
           handleDescriptionChange={handleDescriptionChange}
           setImageURL={setImageURL}
         />
@@ -153,7 +152,7 @@ export default function Edit(props) {
         <Button content="Version history" onClick={toggleHistory} />
         <Button
           onClick={() => {
-            save(title, description);
+            save(description);
           }}
         >
           Save
