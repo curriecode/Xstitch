@@ -37,9 +37,6 @@ export default function Edit(props) {
     description: ""
   });
 
-  // useState
-  // const [description, setDescription] = useState("");
-
   // image overlay
   const [imageURL, setImageURL] = useState("");
   const [moveImage, setMoveImage] = useState(false);
