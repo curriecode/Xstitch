@@ -33,11 +33,12 @@ export default function Edit(props) {
     pattern: props.setClickedView.colours || blankPattern,
     color: "#9B9B9B",
     pixelSize: "medium",
-    title: ""
+    title: "",
+    description: ""
   });
 
   // useState
-  const [description, setDescription] = useState("");
+  // const [description, setDescription] = useState("");
 
   // image overlay
   const [imageURL, setImageURL] = useState("");
@@ -90,20 +91,16 @@ export default function Edit(props) {
   }
 
   //creates new pattern or checkpoint in the database when save is clicked
-  function save(description) {
+  function save() {
     return createImage().then(image => {
       let saveData = {
-        description: description,
+        description: state.description,
         title: state.title,
         colours: state.pattern,
         image_url: image
       };
       props.saveHandler(saveData);
     });
-  }
-
-  function handleDescriptionChange(event) {
-    setDescription(event.target.value);
   }
 
   const modifyGrid = side => {
@@ -125,10 +122,12 @@ export default function Edit(props) {
       </div>
       <div className="controls" style={{ backgroundColor: state.color }}>
         <TextInputs
-          handleTitleChange={(event) =>
+          handleTitleChange={event =>
             dispatch({ type: "title", title: event.target.value })
           }
-          handleDescriptionChange={handleDescriptionChange}
+          handleDescriptionChange={event =>
+            dispatch({ type: "description", description: event.target.value })
+          }
           setImageURL={setImageURL}
         />
         <MoveImageToggle moveImage={moveImage} toggle={toggle} />
@@ -149,13 +148,7 @@ export default function Edit(props) {
           />
         </div>
         <Button content="Version history" onClick={toggleHistory} />
-        <Button
-          onClick={() => {
-            save(description);
-          }}
-        >
-          Save
-        </Button>
+        <Button onClick={() => save()}>Save</Button>
       </div>
     </section>
   );
