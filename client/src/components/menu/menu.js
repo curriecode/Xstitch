@@ -13,13 +13,10 @@ export default function Menu(props) {
     axios
       .get("/api/users")
       .then(res => {
-
         props.setUser(res.data[0]);
-
         setCurrentUser(res.data[0].name);
         setIsLoggedIn(true);
         setShowUser(true);
-
         let userObj = JSON.stringify(res.data[0]);
         window.localStorage.setItem("user", userObj);
       })
@@ -30,7 +27,7 @@ export default function Menu(props) {
 
   let userDiv;
   if (showUser) {
-    userDiv = <div style={{ marginRight: "14px", fontWeight: "bold" }}> Logged in as Mel!</div>;
+    userDiv = <div style={{ marginRight: "14px", fontWeight: "bold" }}> Logged in as {currentUser} </div>;
   }
 
   return (
@@ -60,9 +57,6 @@ export default function Menu(props) {
         </Nav>
         {userDiv}
         <Button
-          className={`logged-in ${
-            isLoggedIn ? "is-loggedin" : "is-not-loggedin"
-            }`}
           variant="outline-success"
           onClick={getUser}
         >
