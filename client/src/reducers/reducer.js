@@ -23,6 +23,8 @@ export default function reducer(state, action) {
       return { ...state, pixelSize: action.size };
     case "title":
       return { ...state, title: action.title };
+    case "description":
+      return { ...state, description: action.description };
     case "addTop":
       const newRow = [];
       for (let i = 0; i < state.pattern[0].length; i++) {
