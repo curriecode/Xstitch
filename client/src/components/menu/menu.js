@@ -6,7 +6,6 @@ import axios from "axios";
 
 export default function Menu(props) {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   const [showUser, setShowUser] = useState(undefined);
 
   function getUser() {
@@ -15,7 +14,6 @@ export default function Menu(props) {
       .then(res => {
         props.setUser(res.data[0]);
         setCurrentUser(res.data[0].name);
-        setIsLoggedIn(true);
         setShowUser(true);
         let userObj = JSON.stringify(res.data[0]);
         window.localStorage.setItem("user", userObj);
