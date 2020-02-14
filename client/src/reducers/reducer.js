@@ -84,5 +84,7 @@ export default function reducer(state, action) {
     case "reset":
       // clears grid, blankPattern is dispatched as value
       return { ...state, pattern: action.value };
+    default:
+      throw new Error("Unexpected action");
   }
 }
