@@ -35,12 +35,12 @@ export default function Edit(props) {
     pixelSize: "medium",
     title: "",
     description: "",
-    imageURL: ""
+    imageURL: "",
+    zIndex: 1000
   });
 
   // image overlay
   const [moveImage, setMoveImage] = useState(false);
-  const [zIndex, setzIndex] = useState(1000);
   const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
 
   // clears grid/history if user leaves and then returns to edit page
@@ -53,7 +53,7 @@ export default function Edit(props) {
 
   // useEffect for image overlay
   useEffect(() => {
-    moveImage ? setzIndex(1000) : setzIndex(0);
+    dispatch({ type: "zIndex", zIndex: moveImage ? 1000 : 0 });
   }, [moveImage]);
 
   // show/hide the history tab
@@ -108,7 +108,7 @@ export default function Edit(props) {
     <section className="edit">
       <div className="grid-history" style={{ zIndex: "100" }}>
         <DndProvider backend={Backend}>
-          <ImageOverlay imageURL={state.imageURL} zIndex={zIndex} />
+          <ImageOverlay imageURL={state.imageURL} zIndex={state.zIndex} />
         </DndProvider>
         <Grid
           pattern={state.pattern}
