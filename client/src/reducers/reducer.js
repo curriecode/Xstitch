@@ -19,6 +19,8 @@ export default function reducer(state, action) {
       };
     case "setColor":
       return { ...state, color: action.value };
+    case "pixelSize":
+      return { ...state, pixelSize: action.size}
     case "addTop":
       const newRow = [];
       for (let i = 0; i < state.pattern[0].length; i++) {
