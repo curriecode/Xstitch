@@ -27,6 +27,8 @@ export default function reducer(state, action) {
       return { ...state, description: action.description };
     case "imageURL":
       return { ...state, imageURL: action.imageURL };
+    case "zIndex":
+      return { ...state, zIndex: action.zIndex };
     case "addTop":
       const newRow = [];
       for (let i = 0; i < state.pattern[0].length; i++) {
