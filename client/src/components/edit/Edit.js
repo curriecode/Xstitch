@@ -34,11 +34,11 @@ export default function Edit(props) {
     color: "#9B9B9B",
     pixelSize: "medium",
     title: "",
-    description: ""
+    description: "",
+    imageURL: ""
   });
 
   // image overlay
-  const [imageURL, setImageURL] = useState("");
   const [moveImage, setMoveImage] = useState(false);
   const [zIndex, setzIndex] = useState(1000);
   const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
@@ -108,7 +108,7 @@ export default function Edit(props) {
     <section className="edit">
       <div className="grid-history" style={{ zIndex: "100" }}>
         <DndProvider backend={Backend}>
-          <ImageOverlay imageURL={imageURL} zIndex={zIndex} />
+          <ImageOverlay imageURL={state.imageURL} zIndex={zIndex} />
         </DndProvider>
         <Grid
           pattern={state.pattern}
@@ -125,7 +125,9 @@ export default function Edit(props) {
           handleDescriptionChange={event =>
             dispatch({ type: "description", description: event.target.value })
           }
-          setImageURL={setImageURL}
+          setImageURL={event =>
+            dispatch({ type: "imageURL", imageURL: event.target.value })
+          }
         />
         <MoveImageToggle moveImage={moveImage} toggle={toggle} />
         <ColorPicker
