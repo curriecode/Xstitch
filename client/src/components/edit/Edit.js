@@ -36,12 +36,16 @@ export default function Edit(props) {
     title: "",
     description: "",
     imageURL: "",
-    zIndex: 1000
+    zIndex: 1000,
+    moveImage: false
   });
 
   // image overlay
   const [moveImage, setMoveImage] = useState(false);
-  const toggle = useCallback(() => setMoveImage(!moveImage), [moveImage]);
+  const toggle = useCallback(
+    () => dispatch({ type: "moveImage", moveImage: !state.moveImage }),
+    [state.moveImage]
+  );
 
   // clears grid/history if user leaves and then returns to edit page
   useEffect(() => {
@@ -53,8 +57,8 @@ export default function Edit(props) {
 
   // useEffect for image overlay
   useEffect(() => {
-    dispatch({ type: "zIndex", zIndex: moveImage ? 1000 : 0 });
-  }, [moveImage]);
+    dispatch({ type: "zIndex", zIndex: state.moveImage ? 1000 : 0 });
+  }, [state.moveImage]);
 
   // show/hide the history tab
   const [history, viewHistory] = useState("hide");
@@ -129,7 +133,7 @@ export default function Edit(props) {
             dispatch({ type: "imageURL", imageURL: event.target.value })
           }
         />
-        <MoveImageToggle moveImage={moveImage} toggle={toggle} />
+        <MoveImageToggle moveImage={state.moveImage} toggle={toggle} />
         <ColorPicker
           color={state.color}
           onChangeComplete={input =>
