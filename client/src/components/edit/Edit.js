@@ -31,11 +31,11 @@ export default function Edit(props) {
   // useReducer
   const [state, dispatch] = useReducer(reducer, {
     pattern: props.setClickedView.colours || blankPattern,
-    color: "#9B9B9B"
+    color: "#9B9B9B",
+    pixelSize: "medium"
   });
 
   // useState
-  const [pixelSize, setPixelSize] = useState("medium");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
 
@@ -102,10 +102,6 @@ export default function Edit(props) {
     });
   }
 
-  function setSize(input) {
-    setPixelSize(input);
-  }
-
   function handleTitleChange(event) {
     setTitle(event.target.value);
   }
@@ -114,8 +110,8 @@ export default function Edit(props) {
     setDescription(event.target.value);
   }
 
-  const modifyGrid = (side) => {
-    dispatch({ type: side})
+  const modifyGrid = side => {
+    dispatch({ type: side });
   };
 
   return (
@@ -127,7 +123,7 @@ export default function Edit(props) {
         <Grid
           pattern={state.pattern}
           updateColor={location => dispatch({ type: "paint", location })}
-          size={pixelSize}
+          size={state.pixelSize}
         />
         {historyTab}
       </div>
@@ -150,7 +146,9 @@ export default function Edit(props) {
             patternColumns={state.pattern[0].length}
             modifyGrid={modifyGrid}
           />
-          <PixelSizeButtons setSize={setSize} />
+          <PixelSizeButtons
+            setSize={size => dispatch({ type: "pixelSize", size })}
+          />
         </div>
         <Button content="Version history" onClick={toggleHistory} />
         <Button
