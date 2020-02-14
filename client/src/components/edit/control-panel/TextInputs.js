@@ -39,9 +39,7 @@ export default function TextInputs(props) {
           type="text"
           className="form-control"
           aria-label="URL"
-          onChange={event => {
-            props.setImageURL(event.target.value);
-          }}
+          onChange={props.setImageURL}
         ></input>
       </div>
     </div>
